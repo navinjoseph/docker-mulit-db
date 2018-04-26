@@ -43,9 +43,9 @@ npm manifest:
       "supertest": "^3.0.0"
     },
     "scripts": {
-      "start": "babel-watch server.js",
+      "start": "PORT=6000 babel-watch server.js",
       "test": "jest",
-      "test:watch": "jest --watch",
+      "test:watch": "PORT=6001 jest --watchAll --forceExit",
       "precommit": "lint-staged"
     },
     "lint-staged": {
@@ -4887,7 +4887,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c jest --watch
+  Arguments: -c PORT=6001 jest --watchAll --forceExit
   Directory: /Users/alexmiles/dev/tokentax/history
   Output:
   

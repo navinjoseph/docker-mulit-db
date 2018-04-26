@@ -29,7 +29,7 @@
   "scripts": {
     "start": "PORT=6000 babel-watch server.js",
     "test": "jest",
-    "test:watch": "PORT=6001 jest --watchAll",
+    "test:watch": "PORT=6001 jest --watchAll --forceExit",
     "precommit": "lint-staged"
   },
   "lint-staged": {
