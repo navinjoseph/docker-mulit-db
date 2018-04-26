@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test:watch
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start
 
 PATH: 
   /Users/alexmiles/go/bin:/Users/alexmiles/go/bin:/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:/Users/alexmiles/.fastlane/bin:/Users/alexmiles/.rvm/gems/ruby-2.4.1/bin:/Users/alexmiles/.rvm/gems/ruby-2.4.1@global/bin:/Users/alexmiles/.rvm/rubies/ruby-2.4.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/alexmiles/.rvm/bin:/usr/local/bin/
@@ -21,7 +21,8 @@ npm manifest:
     "main": "server.js",
     "license": "MIT",
     "dependencies": {
-      "express": "^4.16.3"
+      "express": "^4.16.3",
+      "roarr": "^2.0.2"
     },
     "devDependencies": {
       "babel-cli": "^6.26.0",
@@ -45,11 +46,15 @@ npm manifest:
     "scripts": {
       "start": "PORT=6000 babel-watch server.js",
       "test": "jest",
-      "test:watch": "PORT=6001 jest --watchAll --forceExit",
+      "test:watch": "jest --watchAll --forceExit",
       "precommit": "lint-staged"
     },
     "lint-staged": {
-      "*.{js,json,css,md}": ["prettier --write", "eslint --fix", "git add"]
+      "*.{js,json,css,md}": [
+        "prettier --write",
+        "eslint --fix",
+        "git add"
+      ]
     }
   }
 
@@ -902,6 +907,10 @@ Lockfile:
       raw-body "2.3.2"
       type-is "~1.6.15"
   
+  boolean@^0.1.3:
+    version "0.1.3"
+    resolved "https://registry.yarnpkg.com/boolean/-/boolean-0.1.3.tgz#2744b39e7882afab80dca8dcf515bdf4e052e500"
+  
   boom@4.x.x:
     version "4.3.1"
     resolved "https://registry.yarnpkg.com/boom/-/boom-4.3.1.tgz#4f8a3005cb4a7e3889f749030fd25b96e01d2e31"
@@ -1029,7 +1038,7 @@ Lockfile:
       strip-ansi "^3.0.0"
       supports-color "^2.0.0"
   
-  chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.1:
+  chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.1:
     version "2.4.0"
     resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.0.tgz#a060a297a6b57e15b61ca63ce84995daa0fe6e52"
     dependencies:
@@ -1144,6 +1153,10 @@ Lockfile:
   color-name@^1.1.1:
     version "1.1.3"
     resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
+  
+  colors@^1.1.2:
+    version "1.2.1"
+    resolved "https://registry.yarnpkg.com/colors/-/colors-1.2.1.tgz#f4a3d302976aaf042356ba1ade3b1a2c62d9d794"
   
   combined-stream@1.0.6, combined-stream@~1.0.5:
     version "1.0.6"
@@ -3759,6 +3772,13 @@ Lockfile:
       ansi-regex "^3.0.0"
       ansi-styles "^3.2.0"
   
+  prettyjson@^1.2.1:
+    version "1.2.1"
+    resolved "https://registry.yarnpkg.com/prettyjson/-/prettyjson-1.2.1.tgz#fcffab41d19cab4dfae5e575e64246619b12d289"
+    dependencies:
+      colors "^1.1.2"
+      minimist "^1.2.0"
+  
   private@^0.1.6, private@^0.1.7:
     version "0.1.8"
     resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -3853,7 +3873,7 @@ Lockfile:
       normalize-package-data "^2.3.2"
       path-type "^2.0.0"
   
-  readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.2.2:
+  readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.5, readable-stream@^2.2.2:
     version "2.3.6"
     resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
     dependencies:
@@ -4070,6 +4090,18 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
     dependencies:
       glob "^7.0.5"
+  
+  roarr@^2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/roarr/-/roarr-2.0.2.tgz#bf0cbbcced51656aa40f802bc97aa4694602cb15"
+    dependencies:
+      boolean "^0.1.3"
+      chalk "^2.3.0"
+      prettyjson "^1.2.1"
+      split2 "^2.2.0"
+      sprintf-js "^1.1.1"
+      ulid "^2.2.1"
+      yargs "^10.0.3"
   
   run-async@^2.2.0:
     version "2.3.0"
@@ -4332,6 +4364,16 @@ Lockfile:
     dependencies:
       extend-shallow "^3.0.0"
   
+  split2@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/split2/-/split2-2.2.0.tgz#186b2575bcf83e85b7d18465756238ee4ee42493"
+    dependencies:
+      through2 "^2.0.2"
+  
+  sprintf-js@^1.1.1:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.1.tgz#36be78320afe5801f6cea3ee78b6e5aab940ea0c"
+  
   sprintf-js@~1.0.2:
     version "1.0.3"
     resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
@@ -4552,6 +4594,13 @@ Lockfile:
     version "4.1.0"
     resolved "https://registry.yarnpkg.com/throat/-/throat-4.1.0.tgz#89037cbc92c56ab18926e6ba4cbb200e15672a6a"
   
+  through2@^2.0.2:
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
+    dependencies:
+      readable-stream "^2.1.5"
+      xtend "~4.0.1"
+  
   through@^2.3.6:
     version "2.3.8"
     resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
@@ -4651,6 +4700,10 @@ Lockfile:
   uglify-to-browserify@~1.0.0:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
+  
+  ulid@^2.2.1:
+    version "2.3.0"
+    resolved "https://registry.yarnpkg.com/ulid/-/ulid-2.3.0.tgz#93063522771a9774121a84d126ecd3eb9804071f"
   
   union-value@^1.0.0:
     version "1.0.0"
@@ -4839,6 +4892,10 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   
+  xtend@~4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+  
   y18n@^3.2.1:
     version "3.2.1"
     resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
@@ -4887,7 +4944,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c PORT=6001 jest --watchAll --forceExit
+  Arguments: -c PORT=6000 babel-watch server.js
   Directory: /Users/alexmiles/dev/tokentax/history
   Output:
   

@@ -5,7 +5,8 @@
   "main": "server.js",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "roarr": "^2.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -27,9 +28,9 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "start": "PORT=6000 babel-watch server.js",
+    "start": "PORT=6000 ROARR_LOG=true babel-watch server.js",
     "test": "jest",
-    "test:watch": "PORT=6001 jest --watchAll --forceExit",
+    "test:watch": "jest --watchAll --forceExit",
     "precommit": "lint-staged"
   },
   "lint-staged": {

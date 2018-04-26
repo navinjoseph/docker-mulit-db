@@ -1,6 +1,7 @@
 import express from 'express'
+import log from 'roarr'
 
-const { PORT } = process.env
+const PORT = process.env.PORT || 6001
 
 const app = express()
 
