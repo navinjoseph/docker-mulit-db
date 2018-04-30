@@ -17,6 +17,20 @@ async function requestData () {
         price,
         date
       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
       log('Currency found')
     } catch (err) {
       log.warn(`Can't find ${symbol}`, err.response.req.path)
