@@ -12,27 +12,11 @@ async function requestData () {
       const $ = cheerio.load(html)
       const price = $('[data-currency-price][data-usd]').text()
       const date = new Date().getTime()
-      global.ROARR.prepend =      {
+      global.ROARR.prepend = {
         symbol,
         price,
         date
-
-
-
-
-        
       }
-
-
-
-
-
-
-
-
-
-
-
 
       log('Currency found')
     } catch (err) {
