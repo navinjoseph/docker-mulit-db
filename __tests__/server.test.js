@@ -1,13 +1,15 @@
-const request = require('supertest')
-const app = require('../server.js')
+import symbols from '../utils/symbols'
+import fetchCurrency from '../utils/fetch-currency'
+import bitcoinRes from '../__mockData__/bitcoin.mockdata'
 
-afterEach(() => {
-  app.server.close()
+describe('Cryptocurrency utilities', () => {
+  test('.symbols() should return an array of all currencies', () => {
+    expect(symbols.length).toBeGreaterThan(0)
+  })
 })
 
-describe('Test the root path', () => {
-  test('It should response the GET method', async () => {
-    const response = await request(app).get('/')
-    expect(response.statusCode).toBe(200)
-  })
+describe('CoinMarketCap API Data', () => {})
+
+describe('HTML parsing', () => {
+  test('Should return price in USD', () => {})
 })

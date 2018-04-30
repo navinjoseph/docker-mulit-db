@@ -1,12 +1,27 @@
-import express from 'express'
-// import log from 'roarr'
+import cryptocurrencies from 'cryptocurrencies'
+import symbols from './utils/symbols'
+import fetchCurrency from './utils/fetch-currency'
+import cheerio from 'cheerio'
+import log from 'roarr'
 
-const PORT = process.env.PORT || 6001
+async function requestData () {
+  for (const symbol of symbols) {
+    const cryptoString = cryptocurrencies[symbol]
+    try {
+      const html = await fetchCurrency(cryptoString.replace(/\s/g, '-'))
+      const $ = cheerio.load(html)
+      const price = $('[data-currency-price][data-usd]').text()
+      const date = new Date().getTime()
+      global.ROARR.prepend = {
+        symbol,
+        price,
+        date
+      }
+      log('Currency found')
+    } catch (err) {
+      log.warn(`Can't find ${symbol}`, err.response.req.path)
+    }
+  }
+}
 
-const app = express()
-
-app.get('/', (req, res) => res.send('Hello World!'))
-
-app.server = app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
-
-module.exports = app
+requestData()
