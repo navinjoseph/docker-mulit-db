@@ -32,16 +32,12 @@
   },
   "scripts": {
     "start": "PORT=6000 ROARR_LOG=true babel-watch server.js",
-    "test": "jest",
+    "test": "jest --forceExit",
     "test:coverage": "jest --coverage --watchAll",
     "test:watch": "jest --watchAll --forceExit",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
+    "*.{js,json,css,md}": ["prettier --write", "eslint --fix", "git add"]
   }
 }
