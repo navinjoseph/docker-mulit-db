@@ -34,10 +34,11 @@ async function requestData () {
       })
     } catch (err) {
       global.ROARR.prepend = {
+        error: err,
         message: err.message,
         currency: symbol
       }
-      log.warn(`Can't find currency`)
+      log.error('Error')
     }
   }
 
