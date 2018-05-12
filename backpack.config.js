@@ -8,6 +8,7 @@ module.exports = {
     // changes the name of the entry point from index -> main.js
     // config.entry.main = ['./api/server.js', './reports/index.js']
     config.entry = {
+      scraper: './scraper.js',
       server: './server.js'
     }
 

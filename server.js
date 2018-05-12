@@ -1,52 +1,33 @@
-import cryptocurrencies from 'cryptocurrencies'
-import request from 'superagent'
-import cheerio from 'cheerio'
-import symbols from './utils/symbols'
-import fetchCurrency, { getPrice } from './utils/fetch-currency'
-import log from 'roarr'
+import express from 'express'
+import morgan from 'morgan'
 import './db'
-import History from './db/history'
 
-async function requestData () {
-  log('Starting')
+const app = express()
+const port = process.env.PORT || 3000
 
-  for (const symbol of symbols) {
-    const cryptoString = cryptocurrencies[symbol]
-    try {
-      const html = await fetchCurrency(cryptoString, request)
-      const price = getPrice(html, cheerio)
-
-      let sanatizedPrice
-      if (isNaN(price) === false) {
-        sanatizedPrice = price
-      } else {
-        sanatizedPrice = null
-      }
-
-      global.ROARR.prepend = {
-        symbol,
-        sanatizedPrice
-      }
-
-      log('Currency found')
-
-      await History.query().insert({
-        name: cryptoString,
-        ticker: symbol,
-        usdPrice: sanatizedPrice,
-        timestamp: new Date().toISOString()
-      })
-    } catch (err) {
-      global.ROARR.prepend = {
-        error: err,
-        message: err.message,
-        currency: symbol
-      }
-      log.error('Error')
-    }
-  }
-
-  log('Finished')
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500)
+    res.json({
+      message: err.message,
+      error: err
+    })
+  })
 }
 
-requestData()
+// production error handler
+// no stacktraces leaked to user
+app.use((err, req, res, next) => {
+  res.status(err.status || 500)
+  res.json({
+    message: err.message,
+    error: {}
+  })
+})
+
+app.get('/', (req, res) => res.send('History DB'))
+
+app.listen(port, () => {
+  console.log('Magic happens on port ' + port)
+})

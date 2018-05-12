@@ -1,1 +1,2 @@
-worker: node build/server.js
+worker: node build/scraper.js
+web: node build/server.js
