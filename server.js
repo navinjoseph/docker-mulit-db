@@ -13,10 +13,7 @@ async function requestData () {
   for (const symbol of symbols) {
     const cryptoString = cryptocurrencies[symbol]
     try {
-      const html = await fetchCurrency(
-        cryptoString.replace(/\s/g, '-'),
-        request
-      )
+      const html = await fetchCurrency(cryptoString, request)
       const price = getPrice(html, cheerio)
 
       const timestamp = new Date().toISOString()

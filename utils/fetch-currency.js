@@ -5,7 +5,9 @@ export const getPrice = (html, cheerio) => {
   return price
 }
 
-const fetchCurrency = (currency, request) => {
+const fetchCurrency = (cryptoString, request) => {
+  const currency = String(cryptoString).replace(/\s/g, '-')
+
   return new Promise((resolve, reject) => {
     request
       .get(`https://coinmarketcap.com/currencies/${currency}`)
