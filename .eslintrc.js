@@ -1,6 +1,7 @@
 module.exports = {
-  extends: 'standard',
+  parser: "babel-eslint",
+  extends: "standard",
   env: {
     jest: true
   }
-}
+};

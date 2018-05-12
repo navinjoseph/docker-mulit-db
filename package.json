@@ -5,18 +5,25 @@
   "main": "server.js",
   "license": "MIT",
   "dependencies": {
+    "backpack-core": "^0.7.0",
     "cheerio": "^1.0.0-rc.2",
     "cryptocurrencies": "^3.0.1",
     "express": "^4.16.3",
+    "knex": "^0.14.6",
+    "objection": "^1.1.8",
+    "pg": "^7.4.3",
     "roarr": "^2.0.2",
     "superagent": "^3.8.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-eslint": "8.2.3",
+    "babel-eslint": "8",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "babel-watch": "^2.0.7",
-    "eslint": "4.19.1",
+    "eslint": "4.x",
     "eslint-config-prettier": "2.9.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
@@ -31,11 +38,13 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "start": "PORT=6000 ROARR_LOG=true babel-watch server.js",
+    "start": "PORT=6000 ROARR_LOG=true NODE_ENV=development babel-watch server.js",
     "test": "jest --forceExit",
     "test:coverage": "jest --coverage --watchAll",
     "test:watch": "jest --watchAll --forceExit",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build": "backpack build",
+    "heroku-postbuild": "yarn run build"
   },
   "lint-staged": {
     "*.js": [
