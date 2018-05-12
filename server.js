@@ -16,12 +16,16 @@ async function requestData () {
       const html = await fetchCurrency(cryptoString, request)
       const price = getPrice(html, cheerio)
 
-      const timestamp = new Date().toISOString()
+      let sanatizedPrice
+      if (isNaN(price) === false) {
+        sanatizedPrice = price
+      } else {
+        sanatizedPrice = null
+      }
 
       global.ROARR.prepend = {
         symbol,
-        price,
-        timestamp
+        sanatizedPrice
       }
 
       log('Currency found')
@@ -29,8 +33,8 @@ async function requestData () {
       await History.query().insert({
         name: cryptoString,
         ticker: symbol,
-        usdPrice: price,
-        timestamp
+        usdPrice: sanatizedPrice,
+        timestamp: new Date().toISOString()
       })
     } catch (err) {
       global.ROARR.prepend = {
