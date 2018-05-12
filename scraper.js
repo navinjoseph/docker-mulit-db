@@ -38,7 +38,6 @@ async function requestData () {
       })
     } catch (err) {
       global.ROARR.prepend = {
-        error: err,
         message: err.message,
         currency: symbol
       }
