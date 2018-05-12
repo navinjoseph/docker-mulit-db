@@ -44,13 +44,10 @@
     "test:watch": "jest --watchAll --forceExit",
     "precommit": "lint-staged",
     "build": "backpack build",
-    "heroku-postbuild": "yarn run build"
+    "heroku-postbuild": "yarn run build",
+    "db:migrate": "knex migrate:latest"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "eslint --fix", "git add"]
   }
 }
