@@ -1,7 +1,8 @@
 import cryptocurrencies from 'cryptocurrencies'
-import symbols from './utils/symbols'
-import fetchCurrency from './utils/fetch-currency'
+import request from 'superagent'
 import cheerio from 'cheerio'
+import symbols from './utils/symbols'
+import fetchCurrency, { getPrice } from './utils/fetch-currency'
 import log from 'roarr'
 import './db'
 import History from './db/history'
@@ -12,12 +13,14 @@ async function requestData () {
   for (const symbol of symbols) {
     const cryptoString = cryptocurrencies[symbol]
     try {
-      const html = await fetchCurrency(cryptoString.replace(/\s/g, '-'))
-      const $ = cheerio.load(html)
-      const priceString = $('[data-currency-price][data-usd]').text()
-      const price = Number(priceString.split('\n')[1].replace(/,/g, ''))
+      const html = await fetchCurrency(
+        cryptoString.replace(/\s/g, '-'),
+        request
+      )
+      const price = getPrice(html, cheerio)
 
       const timestamp = new Date().toISOString()
+
       global.ROARR.prepend = {
         symbol,
         price,
