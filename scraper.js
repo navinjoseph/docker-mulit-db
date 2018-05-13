@@ -23,19 +23,19 @@ async function requestData () {
         sanatizedPrice = null
       }
 
-      global.ROARR.prepend = {
-        symbol,
-        sanatizedPrice
-      }
-
-      log('Currency found')
-
-      await History.query().insert({
+      const history = await History.query().insert({
         name: cryptoString,
         ticker: symbol,
         usdPrice: sanatizedPrice,
         timestamp: new Date().toISOString()
       })
+
+      global.ROARR.prepend = {
+        symbol: history.symbol,
+        sanatizedPrice: history.usdPrice
+      }
+
+      log('Inserted')
     } catch (err) {
       global.ROARR.prepend = {
         message: err.message,
