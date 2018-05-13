@@ -10,6 +10,13 @@ describe('fetch currency utils', () => {
     expect(html).toContain('</html>')
   })
 
+  it('should return VEN from CMC', async () => {
+    const html = await fetchCurrency('Vechain', request)
+    expect(html).toContain('<h1 class="text-large">')
+    expect(html).toContain('VeChain')
+    expect(html).toContain('</html>')
+  })
+
   it('should return the price', async () => {
     const html = await fetchCurrency('bitcoin', request)
     const price = getPrice(html, cheerio)
