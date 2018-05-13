@@ -5,6 +5,19 @@ export const getPrice = (html, cheerio) => {
   return price
 }
 
+export const fetchSymbols = request => {
+  return new Promise((resolve, reject) => {
+    request
+      .get('https://api.coinmarketcap.com/v2/listings/')
+      .then(res => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
 const fetchCurrency = (cryptoString, request) => {
   const currency = String(cryptoString)
     .replace(/\s/g, '-')

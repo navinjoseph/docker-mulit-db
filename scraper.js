@@ -1,8 +1,6 @@
-import cryptocurrencies from 'cryptocurrencies'
 import request from 'superagent'
 import cheerio from 'cheerio'
-import symbols from './utils/symbols'
-import fetchCurrency, { getPrice } from './utils/fetch-currency'
+import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import log from 'roarr'
 import './db'
 import History from './db/history'
@@ -10,10 +8,11 @@ import History from './db/history'
 async function requestData () {
   log('Starting')
 
-  for (const symbol of symbols) {
-    const cryptoString = cryptocurrencies[symbol]
+  const symbols = await fetchSymbols(request)
+
+  for (const coin of symbols.body.data) {
     try {
-      const html = await fetchCurrency(cryptoString, request)
+      const html = await fetchCurrency(coin.website_slug, request)
       const price = getPrice(html, cheerio)
 
       let sanatizedPrice
@@ -24,8 +23,8 @@ async function requestData () {
       }
 
       const history = await History.query().insert({
-        name: cryptoString,
-        ticker: symbol,
+        name: coin.name,
+        ticker: coin.symbol,
         usdPrice: sanatizedPrice,
         timestamp: new Date().toISOString()
       })
@@ -39,7 +38,7 @@ async function requestData () {
     } catch (err) {
       global.ROARR.prepend = {
         message: err.message,
-        currency: symbol
+        currency: coin.symbol
       }
       log.error('Error')
     }

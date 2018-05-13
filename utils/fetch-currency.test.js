@@ -1,8 +1,15 @@
 import request from 'superagent'
-import fetchCurrency, { getPrice } from './fetch-currency'
+import fetchCurrency, { getPrice, fetchSymbols } from './fetch-currency'
 import cheerio from 'cheerio'
 
-describe('fetch currency utils', () => {
+describe('Fetch currency list', () => {
+  it('should return list of crypto currencies', async () => {
+    const response = await fetchSymbols(request)
+    expect(response.status).toBe(200)
+  })
+})
+
+describe('fetch single currency', () => {
   it('should return the html from CMC', async () => {
     const html = await fetchCurrency('bitcoin', request)
     expect(html).toContain('<h1 class="text-large">')
