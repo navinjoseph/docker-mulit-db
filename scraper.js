@@ -30,7 +30,7 @@ async function requestData () {
       })
 
       global.ROARR.prepend = {
-        symbol: history.symbol,
+        symbol: history.ticker,
         sanatizedPrice: history.usdPrice
       }
 
