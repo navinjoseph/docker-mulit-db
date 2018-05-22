@@ -1,12 +1,12 @@
 import request from 'superagent'
 import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
-import log from 'roarr'
+import winston from 'winston'
 import './db'
 import History from './db/history'
 
 async function requestData () {
-  log('Starting')
+  winston.info('Starting')
 
   const symbols = await fetchSymbols(request)
 
@@ -29,22 +29,19 @@ async function requestData () {
         timestamp: new Date().toISOString()
       })
 
-      global.ROARR.prepend = {
+      winston.info('Inserted', {
         symbol: history.ticker,
         sanatizedPrice: history.usdPrice
-      }
-
-      log('Inserted')
+      })
     } catch (err) {
-      global.ROARR.prepend = {
+      winston.error('Error', {
         message: err.message,
         currency: coin.symbol
-      }
-      log.error('Error')
+      })
     }
   }
 
-  log('Finished')
+  winston.info('Finished')
 }
 
 requestData()

@@ -17,6 +17,21 @@ module.exports = {
     ...knexSnakeCaseMappers()
   },
 
+  test: {
+    client: 'postgresql',
+    connection: {
+      database: 'tt_history_test'
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    },
+    ...knexSnakeCaseMappers()
+  },
+
   production: {
     client: 'postgresql',
     connection: process.env.DATABASE_URL,

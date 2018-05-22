@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "backpack-core": "^0.7.0",
+    "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "cryptocurrencies": "^3.0.1",
     "express": "^4.16.3",
@@ -13,8 +14,8 @@
     "morgan": "^1.9.0",
     "objection": "^1.1.8",
     "pg": "^7.4.3",
-    "roarr": "^2.0.2",
-    "superagent": "^3.8.2"
+    "superagent": "^3.8.2",
+    "winston": "^2.4.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -39,10 +40,10 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "start": "ROARR_LOG=true NODE_ENV=development babel-watch server.js",
-    "test": "jest --forceExit",
-    "test:coverage": "jest --coverage --watchAll",
-    "test:watch": "jest --watchAll --forceExit",
+    "start": "NODE_ENV=development babel-watch server.js",
+    "test": "NODE_ENV=test jest --forceExit",
+    "test:coverage": "NODE_ENV=test jest --coverage --watchAll",
+    "test:watch": "NODE_ENV=test jest --watchAll --forceExit",
     "precommit": "lint-staged",
     "build": "backpack build",
     "heroku-postbuild": "yarn run db:migrate --knexfile ./db/knexfile.js && yarn run build",
