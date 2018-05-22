@@ -3,3 +3,4 @@ coverage/
 .DS_Store
 build/
 package-lock.json
+yarn-error.log
