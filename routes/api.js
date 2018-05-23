@@ -1,6 +1,6 @@
 import express from 'express'
-// import winston from 'winston'
 import History from '../db/history'
+import { raw } from 'objection'
 
 const router = express.Router()
 
@@ -19,16 +19,19 @@ router.get('/history', async (req, res) => {
     }
 
     const timestamp = new Date(Number(req.query.timestamp))
+    const obj = await History.query()
+      .whereRaw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()])
+      .orderBy(
+        raw(`abs(extract(epoch FROM (created_at - timestamp ??)))`, timestamp)
+      )
+      .limit(1)
 
-    const date = await History.query().where('ticker', 'BTC')
-    console.log(date)
+    const response = obj[0]
+    delete response.id
+    delete response.createdAt
+    delete response.updatedAt
 
-    const obj = {
-      symbol: req.query.symbol,
-      timestamp
-    }
-
-    res.json(obj)
+    res.json(response)
   } catch (err) {
     res.status(400).send({ error: err.message })
   }
