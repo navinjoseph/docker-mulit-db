@@ -7,6 +7,8 @@ describe('Fetch currency list', () => {
     const response = await fetchSymbols(request)
     expect(response.status).toBe(200)
   })
+
+  it('should reject with error')
 })
 
 describe('fetch single currency', () => {
@@ -31,4 +33,6 @@ describe('fetch single currency', () => {
     expect(isNaN(price)).toBeFalsy()
     expect(typeof price).toBe('number')
   })
+
+  it('should reject with error')
 })
