@@ -1,4 +1,5 @@
 const { knexSnakeCaseMappers } = require('objection')
+const path = require('path')
 // Update with your config settings.
 
 module.exports = {
@@ -22,12 +23,12 @@ module.exports = {
     connection: {
       database: 'tt_history_test'
     },
-    pool: {
-      min: 2,
-      max: 10
-    },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'knex_migrations',
+      directory: path.join(__dirname, '/migrations')
+    },
+    seeds: {
+      directory: path.join(__dirname, '/seeds')
     },
     ...knexSnakeCaseMappers()
   },
