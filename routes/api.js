@@ -1,6 +1,7 @@
 import express from 'express'
 // import winston from 'winston'
 import History from '../db/history'
+import { nearestDate } from '../utils/date'
 
 const router = express.Router()
 
@@ -19,14 +20,17 @@ router.get('/history', async (req, res) => {
     }
 
     const timestamp = new Date(Number(req.query.timestamp))
+    const dates = await History.query().where('ticker', 'BTC')
+    const dateArr = dates.map(date => {
+      return date.timestamp
+    })
 
-    const date = await History.query().where('ticker', 'BTC')
-    console.log(date)
+    const index = nearestDate(dateArr, timestamp)
 
-    const obj = {
-      symbol: req.query.symbol,
-      timestamp
-    }
+    const obj = dates[index]
+    delete obj.id
+    delete obj.createdAt
+    delete obj.updatedAt
 
     res.json(obj)
   } catch (err) {
