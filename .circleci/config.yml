@@ -8,6 +8,12 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:9.2.1
+        environment:
+            NODE_ENV: test
+      - image: circleci/postgres:10.3-alpine-postgis
+        environment:
+          POSTGRES_USER: circle_test
+          POSTGRES_DB: tt_history_test
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images

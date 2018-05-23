@@ -21,6 +21,7 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
+      user: process.env.CIRCLECI ? 'circle_test' : undefined,
       database: 'tt_history_test'
     },
     migrations: {
