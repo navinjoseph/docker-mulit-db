@@ -20,8 +20,20 @@ export default class Coin extends Model {
 
       properties: {
         id: { type: 'integer' },
-        name: { type: 'string', minLength: 1, maxLength: 255 },
-        ticker: { type: 'string', minLength: 1, maxLength: 255 }
+        name: {
+          type: 'string',
+          minLength: 1,
+          maxLength: 255,
+          unique: true,
+          nullable: false
+        },
+        ticker: {
+          type: 'string',
+          minLength: 1,
+          maxLength: 255,
+          unique: true,
+          nullable: false
+        }
       }
     }
   }
