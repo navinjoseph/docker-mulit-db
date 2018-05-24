@@ -23,14 +23,14 @@ router.get('/history', async (req, res) => {
       raw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()])
     )
 
-    const obj = await coin[0]
+    const price = await coin[0]
       .$relatedQuery('prices')
       .orderBy(
         raw(`abs(extract(epoch FROM (created_at - timestamp ??)))`, timestamp)
       )
       .limit(1)
 
-    const response = obj[0]
+    const response = price[0]
     delete response.id
     delete response.createdAt
     delete response.updatedAt
