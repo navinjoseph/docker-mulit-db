@@ -3,7 +3,7 @@ import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import winston from 'winston'
 import './db'
-import Price from './db/price'
+import Price from './db/models/price'
 
 async function requestData () {
   winston.info('Starting')

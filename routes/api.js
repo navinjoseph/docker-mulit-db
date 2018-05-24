@@ -1,5 +1,5 @@
 import express from 'express'
-import Price from '../db/price'
+import Price from '../db/models/price'
 import { raw } from 'objection'
 
 const router = express.Router()
