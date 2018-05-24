@@ -1,5 +1,5 @@
 import express from 'express'
-import History from '../db/history'
+import Price from '../db/price'
 import { raw } from 'objection'
 
 const router = express.Router()
@@ -19,7 +19,7 @@ router.get('/history', async (req, res) => {
     }
 
     const timestamp = new Date(Number(req.query.timestamp))
-    const obj = await History.query()
+    const obj = await Price.query()
       .whereRaw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()])
       .orderBy(
         raw(`abs(extract(epoch FROM (created_at - timestamp ??)))`, timestamp)

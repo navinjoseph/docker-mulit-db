@@ -1,14 +1,17 @@
 exports.up = function (knex, Promise) {
-  return knex.schema.createTable('history', table => {
+  return knex.schema.createTable('price', table => {
     table.increments('id').primary()
     table.timestamp('timestamp')
-    table.string('name')
-    table.string('ticker')
     table.float('usd_price')
+    table
+      .integer('coin_id')
+      .notNullable()
+      .references('id')
+      .inTable('coin')
     table.timestamps(true, true)
   })
 }
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('history')
+  return knex.schema.dropTableIfExists('price')
 }

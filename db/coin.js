@@ -1,8 +1,8 @@
 import { Model } from 'objection'
+import Price from './price'
 
-// Person model.
-export default class History extends Model {
-  static tableName = 'history';
+export default class Coin extends Model {
+  static tableName = 'coin';
 
   static idColumn = 'id';
 
@@ -21,9 +21,19 @@ export default class History extends Model {
       properties: {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 255 },
-        ticker: { type: 'string', minLength: 1, maxLength: 255 },
-        usdPrice: { type: 'float' }
+        ticker: { type: 'string', minLength: 1, maxLength: 255 }
       }
     }
   }
+
+  static relationMappings = {
+    prices: {
+      relation: Model.HasManyRelation,
+      modelClass: Price,
+      join: {
+        from: 'coin.id',
+        to: 'price.coinId'
+      }
+    }
+  };
 }

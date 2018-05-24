@@ -3,7 +3,7 @@ import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import winston from 'winston'
 import './db'
-import History from './db/history'
+import Price from './db/price'
 
 async function requestData () {
   winston.info('Starting')
@@ -13,16 +13,16 @@ async function requestData () {
   for (const coin of symbols.body.data) {
     try {
       const html = await fetchCurrency(coin.website_slug, request)
-      const price = getPrice(html, cheerio)
+      const priceRes = getPrice(html, cheerio)
 
       let sanatizedPrice
-      if (isNaN(price) === false) {
-        sanatizedPrice = price
+      if (isNaN(priceRes) === false) {
+        sanatizedPrice = priceRes
       } else {
         sanatizedPrice = null
       }
 
-      const history = await History.query().insert({
+      const price = await Price.query().insert({
         name: coin.name,
         ticker: coin.symbol,
         usdPrice: sanatizedPrice,
@@ -30,8 +30,8 @@ async function requestData () {
       })
 
       winston.info('Inserted', {
-        symbol: history.ticker,
-        sanatizedPrice: history.usdPrice
+        symbol: price.ticker,
+        sanatizedPrice: price.usdPrice
       })
     } catch (err) {
       winston.error('Error', {
