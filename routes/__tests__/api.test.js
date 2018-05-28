@@ -28,6 +28,13 @@ describe('GET /api/history', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should return 400 if coin cant be found', async () => {
+    const response = await request(app).get(
+      '/api/history?symbol=ABC&timestamp=1527034971544'
+    )
+    expect(response.statusCode).toBe(400)
+  })
+
   it('Should return 400 if no timestamp', async () => {
     const response = await request(app).get('/api/history?symbol=BTC')
     expect(response.statusCode).toBe(400)
