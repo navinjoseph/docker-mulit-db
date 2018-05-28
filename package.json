@@ -43,7 +43,7 @@
   "scripts": {
     "start": "NODE_ENV=development babel-watch server.js",
     "scrape": "NODE_ENV=development babel-node scraper.js",
-    "test": "NODE_ENV=test jest --forceExit",
+    "test": "NODE_ENV=test jest --runInBand --forceExit",
     "test:coverage": "NODE_ENV=test jest --coverage --watchAll",
     "test:watch": "NODE_ENV=test jest --watchAll --runInBand --forceExit",
     "precommit": "lint-staged",

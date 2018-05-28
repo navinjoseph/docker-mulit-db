@@ -1,8 +1,8 @@
 import { Model } from 'objection'
 
 // Person model.
-export default class History extends Model {
-  static tableName = 'history';
+export default class Price extends Model {
+  static tableName = 'price';
 
   static idColumn = 'id';
 
@@ -20,9 +20,9 @@ export default class History extends Model {
 
       properties: {
         id: { type: 'integer' },
-        name: { type: 'string', minLength: 1, maxLength: 255 },
-        ticker: { type: 'string', minLength: 1, maxLength: 255 },
-        usdPrice: { type: 'float' }
+        timestamp: { type: 'timestamp' },
+        usdPrice: { type: 'float' },
+        coinId: { type: 'integer' }
       }
     }
   }
