@@ -36,7 +36,11 @@ router.get('/history', async (req, res) => {
       )
       .limit(1)
 
-    const response = price[0]
+    const response = {
+      ...price[0],
+      ticker: coin[0].ticker,
+      name: coin[0].name
+    }
     delete response.id
     delete response.createdAt
     delete response.updatedAt

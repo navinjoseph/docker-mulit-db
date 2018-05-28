@@ -26,6 +26,8 @@ describe('GET /api/history', () => {
       '/api/history?symbol=BTC&timestamp=1527034971544'
     )
     expect(response.statusCode).toBe(200)
+    expect(response.body.ticker).toBe('BTC')
+    expect(response.body.name).toBe('Bitcoin')
   })
 
   it('should return 400 if coin cant be found', async () => {
