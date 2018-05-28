@@ -1,18 +1,24 @@
 import request from 'superagent'
 import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
+import { insertOrFetchCoin, insertPrice } from './utils/data'
 import winston from 'winston'
 import './db'
-import Price from './db/models/price'
 
 async function requestData () {
   winston.info('Starting')
 
   const symbols = await fetchSymbols(request)
 
-  for (const coin of symbols.body.data) {
+  for (const coinData of symbols.body.data) {
     try {
-      const html = await fetchCurrency(coin.website_slug, request)
+      // coinData = { id: 1, name: 'Bitcoin', symbol: 'BTC', website_slug: 'bitcoin' }
+      const coin = await insertOrFetchCoin({
+        name: coinData.name,
+        ticker: coinData.symbol
+      })
+
+      const html = await fetchCurrency(coinData.website_slug, request)
       const priceRes = getPrice(html, cheerio)
 
       let sanatizedPrice
@@ -22,21 +28,20 @@ async function requestData () {
         sanatizedPrice = null
       }
 
-      const price = await Price.query().insert({
-        name: coin.name,
-        ticker: coin.symbol,
+      const price = await insertPrice({
+        timestamp: new Date().toISOString(),
         usdPrice: sanatizedPrice,
-        timestamp: new Date().toISOString()
+        ticker: coin.ticker
       })
 
       winston.info('Inserted', {
-        symbol: price.ticker,
+        symbol: coin.ticker,
         sanatizedPrice: price.usdPrice
       })
     } catch (err) {
       winston.error('Error', {
         message: err.message,
-        currency: coin.symbol
+        currency: coinData.symbol
       })
     }
   }
