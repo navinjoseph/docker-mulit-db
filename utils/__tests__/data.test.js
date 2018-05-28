@@ -36,6 +36,10 @@ describe('insert coin', () => {
     expect(coin.name).toBe('Ethereum')
     expect(coin.ticker).toBe('ETH')
   })
+
+  it('should throw an error if no data', async () => {
+    await expect(insertOrFetchCoin()).rejects.toThrow()
+  })
 })
 
 describe('insert price for coin', () => {
