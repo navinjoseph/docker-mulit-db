@@ -23,6 +23,12 @@ router.get('/history', async (req, res) => {
       raw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()])
     )
 
+    if (coin.length === 0) {
+      throw new Error(
+        `Cannot find data for ticker: ${req.query.symbol.toUpperCase()} - ${timestamp}`
+      )
+    }
+
     const price = await coin[0]
       .$relatedQuery('prices')
       .orderBy(
