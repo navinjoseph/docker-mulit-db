@@ -2,9 +2,9 @@ import { Model } from 'objection'
 import Source from './source'
 
 export default class Price extends Model {
-  static tableName = 'price';
+  static tableName = 'price'
 
-  static idColumn = 'id';
+  static idColumn = 'id'
 
   $beforeInsert () {
     this.createdAt = new Date().toISOString()
@@ -37,5 +37,5 @@ export default class Price extends Model {
         to: 'source.id'
       }
     }
-  };
+  }
 }
