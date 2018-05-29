@@ -1,6 +1,6 @@
 import { Model } from 'objection'
+import Source from './source'
 
-// Person model.
 export default class Price extends Model {
   static tableName = 'price';
 
@@ -22,8 +22,20 @@ export default class Price extends Model {
         id: { type: 'integer' },
         timestamp: { type: 'timestamp' },
         usdPrice: { type: 'float' },
-        coinId: { type: 'integer' }
+        coinId: { type: 'integer' },
+        sourceId: { type: 'integer' }
       }
     }
   }
+
+  static relationMappings = {
+    source: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: Source,
+      join: {
+        from: 'price.sourceId',
+        to: 'source.id'
+      }
+    }
+  };
 }
