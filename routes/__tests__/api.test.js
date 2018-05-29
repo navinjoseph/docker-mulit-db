@@ -22,18 +22,15 @@ describe('GET /api', () => {
 
 describe('GET /api/history', () => {
   it('Should return 200', async () => {
-    const response = await request(app).get(
-      '/api/history?symbol=BTC&timestamp=1527034971544'
-    )
+    const response = await request(app).get('/api/history?symbol=BTC&timestamp=1527034971544')
     expect(response.statusCode).toBe(200)
     expect(response.body.ticker).toBe('BTC')
     expect(response.body.name).toBe('Bitcoin')
+    expect(response.body.coinId).toBe(undefined)
   })
 
   it('should return 400 if coin cant be found', async () => {
-    const response = await request(app).get(
-      '/api/history?symbol=ABC&timestamp=1527034971544'
-    )
+    const response = await request(app).get('/api/history?symbol=ABC&timestamp=1527034971544')
     expect(response.statusCode).toBe(400)
   })
 
