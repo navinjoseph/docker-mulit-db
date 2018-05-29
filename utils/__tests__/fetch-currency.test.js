@@ -1,5 +1,12 @@
 import request from 'superagent'
-import fetchCurrency, { getPrice, fetchSymbols } from '../fetch-currency'
+import moment from 'moment'
+import fetchCurrency, {
+  getPrice,
+  getPriceHistorical,
+  fetchSymbols,
+  fetchCurrencyHistorical,
+  sanatizeTicker
+} from '../fetch-currency'
 import cheerio from 'cheerio'
 
 describe('Fetch currency list', () => {
@@ -35,4 +42,27 @@ describe('fetch single currency', () => {
   })
 
   it('should reject with error')
+})
+
+describe('fetchCurrencyHistorical()', () => {
+  it('should return html for historical price data', async () => {
+    const html = await fetchCurrencyHistorical('Bitcoin', request, moment)
+    expect(html).toContain('<div id="historical-data" class="tab-pane active">')
+    expect(html).toContain('Historical data for Bitcoin')
+  })
+})
+
+describe('getPriceHisorical()', () => {
+  it('should return data structure', async () => {
+    const html = await fetchCurrencyHistorical('Bitcoin', request, moment)
+    const priceArr = getPriceHistorical(html, cheerio)
+    expect(priceArr.length).toBeGreaterThan(0)
+  })
+})
+
+describe('sanatizeTicker()', () => {
+  it('should return sanatized ticker', () => {
+    const ticker = sanatizeTicker('BTC-a')
+    expect(ticker).toBe('btc-a')
+  })
 })
