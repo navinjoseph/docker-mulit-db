@@ -25,6 +25,11 @@ export const insertPrice = data => {
         throw new Error(`Cannot find the ticker: ${data.ticker}`)
       }
 
+      // let sourceId = null
+      if (data.source) {
+        // sourceId = data.source.id
+      }
+
       const price = await coin[0].$relatedQuery('prices').insert({
         timestamp: data.timestamp,
         usdPrice: data.usdPrice

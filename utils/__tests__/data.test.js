@@ -12,7 +12,7 @@ beforeEach(async () => {
   }
 })
 
-describe('insert coin', () => {
+describe('insertOrFetchCoin()', () => {
   it('should insert coin if it does not exist', async () => {
     const coin = await insertOrFetchCoin({
       name: 'Ethereum',
