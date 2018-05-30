@@ -56,4 +56,3 @@ async function requestData () {
 }
 
 requestData()
-console.log('hey')
