@@ -33,7 +33,11 @@ async function requestData () {
         const insertedOpenPrice = await insertPrice({
           ticker: coin.ticker,
           timestamp: openDate,
-          usdPrice: price.open
+          usdPrice: price.open,
+          source: {
+            name: 'crimson',
+            description: 'Crimson historical data'
+          }
         })
 
         winston.info('Success', {
@@ -45,7 +49,10 @@ async function requestData () {
         const insertedClosePrice = await insertPrice({
           ticker: coin.ticker,
           timestamp: closeDate,
-          usdPrice: price.close
+          usdPrice: price.close,
+          source: {
+            name: 'crimson'
+          }
         })
 
         winston.info('Success', {

@@ -31,7 +31,11 @@ async function requestData () {
       const price = await insertPrice({
         timestamp: new Date().toISOString(),
         usdPrice: sanatizedPrice,
-        ticker: coin.ticker
+        ticker: coin.ticker,
+        source: {
+          name: 'crimson',
+          description: 'Crimson historical data'
+        }
       })
 
       winston.info('Inserted', {
