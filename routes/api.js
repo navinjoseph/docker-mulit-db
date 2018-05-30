@@ -39,6 +39,7 @@ router.get('/history', async (req, res) => {
     delete response.createdAt
     delete response.updatedAt
     delete response.coinId
+    delete response.sourceId
 
     res.json(response)
   } catch (err) {

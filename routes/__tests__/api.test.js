@@ -26,7 +26,9 @@ describe('GET /api/history', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.ticker).toBe('BTC')
     expect(response.body.name).toBe('Bitcoin')
-    expect(response.body.coinId).toBe(undefined)
+
+    const keys = Object.keys(response.body)
+    expect(keys).toEqual(['timestamp', 'usdPrice', 'ticker', 'name'])
   })
 
   it('should return 400 if coin cant be found', async () => {
