@@ -41,9 +41,9 @@ describe('GET /api/v1/history', () => {
     expect(response.statusCode).toBe(400)
   })
 
-  it('Should return 400 if no timestamp', async () => {
+  it('Should return latest symbol if no timestamp', async () => {
     const response = await request(app).get('/api/v1/history?symbol=BTC')
-    expect(response.statusCode).toBe(400)
+    expect(response.statusCode).toBe(200)
   })
 
   it('Should return 400 if no symbol', async () => {

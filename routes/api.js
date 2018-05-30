@@ -15,11 +15,13 @@ router.get('/history', async (req, res) => {
       throw new Error('Symbol is required')
     }
 
+    let timestamp
     if (!req.query.timestamp) {
-      throw new Error('Timestamp is required')
+      timestamp = new Date().toISOString()
+    } else {
+      timestamp = new Date(Number(req.query.timestamp)).toISOString()
     }
 
-    const timestamp = new Date(Number(req.query.timestamp)).toISOString()
     const coin = await Coin.query().where(raw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()]))
 
     if (coin.length === 0) {
