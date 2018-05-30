@@ -1,6 +1,7 @@
 import express from 'express'
 import Coin from '../db/models/coin'
 import { raw } from 'objection'
+import Raven from '../raven/'
 
 const router = express.Router()
 
@@ -43,6 +44,7 @@ router.get('/history', async (req, res) => {
 
     res.json(response)
   } catch (err) {
+    Raven.captureException(err)
     res.status(400).send({ error: err.message })
   }
 })

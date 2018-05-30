@@ -9,12 +9,14 @@
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "cryptocurrencies": "^3.0.1",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "knex": "^0.14.6",
     "moment": "^2.22.1",
     "morgan": "^1.9.0",
     "objection": "^1.1.8",
     "pg": "^7.4.3",
+    "raven": "^2.6.2",
     "superagent": "^3.8.2",
     "winston": "^2.4.2"
   },
@@ -54,6 +56,10 @@
     "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "eslint --fix", "git add"]
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

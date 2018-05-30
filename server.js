@@ -1,4 +1,5 @@
 // 💃 This is where it all starts
+import {} from 'dotenv/config'
 import app from './app'
 import winston from 'winston'
 
