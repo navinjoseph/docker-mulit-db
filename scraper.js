@@ -56,3 +56,4 @@ async function requestData () {
 }
 
 requestData()
+console.log('he')
