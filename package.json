@@ -8,6 +8,7 @@
     "backpack-core": "^0.7.0",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
+    "codecov": "^3.0.2",
     "cryptocurrencies": "^3.0.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
@@ -46,8 +47,8 @@
     "start": "NODE_ENV=development babel-watch server.js",
     "scrape": "NODE_ENV=development babel-node scraper.js",
     "scrape:history": "NODE_ENV=development babel-node historical-scraper.js",
-    "test": "NODE_ENV=test jest --runInBand --forceExit",
-    "test:coverage": "NODE_ENV=test jest --coverage --watchAll",
+    "test": "jest --runInBand --forceExit && codecov --token=c08cd1fc-b004-4d0e-9d77-d4a1b0b18d84",
+    "test:coverage": "jest --coverage --watchAll",
     "test:watch": "NODE_ENV=test jest --watchAll --runInBand --forceExit",
     "precommit": "lint-staged",
     "build": "backpack build",
@@ -56,10 +57,10 @@
     "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "eslint --fix", "git add"]
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }
