@@ -46,3 +46,11 @@ See code coverage
 ```
 yarn test:coverage
 ```
+
+## Production scripts
+
+Run historical scraper in production
+
+```
+heroku run:detached node build/historicalScraper.js
+```
