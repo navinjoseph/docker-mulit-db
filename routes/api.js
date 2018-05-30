@@ -19,21 +19,15 @@ router.get('/history', async (req, res) => {
     }
 
     const timestamp = new Date(Number(req.query.timestamp))
-    const coin = await Coin.query().where(
-      raw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()])
-    )
+    const coin = await Coin.query().where(raw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()]))
 
     if (coin.length === 0) {
-      throw new Error(
-        `Cannot find data for ticker: ${req.query.symbol.toUpperCase()} - ${timestamp}`
-      )
+      throw new Error(`Cannot find data for ticker: ${req.query.symbol.toUpperCase()} - ${timestamp}`)
     }
 
     const price = await coin[0]
       .$relatedQuery('prices')
-      .orderBy(
-        raw(`abs(extract(epoch FROM (created_at - timestamp ??)))`, timestamp)
-      )
+      .orderBy(raw(`abs(extract(epoch FROM (created_at - timestamp ??)))`, timestamp))
       .limit(1)
 
     const response = {
@@ -44,6 +38,8 @@ router.get('/history', async (req, res) => {
     delete response.id
     delete response.createdAt
     delete response.updatedAt
+    delete response.coinId
+    delete response.sourceId
 
     res.json(response)
   } catch (err) {

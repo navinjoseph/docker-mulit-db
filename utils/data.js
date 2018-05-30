@@ -1,4 +1,6 @@
 import Coin from '../db/models/coin'
+import Price from '../db/models/price'
+import Source from '../db/models/source'
 
 export const insertOrFetchCoin = data => {
   return new Promise(async (resolve, reject) => {
@@ -29,6 +31,29 @@ export const insertPrice = data => {
         timestamp: data.timestamp,
         usdPrice: data.usdPrice
       })
+
+      let source = null
+      if (data.source) {
+        const sourceQuery = await Source.query().where('name', data.source.name)
+        if (sourceQuery.length === 0) {
+          source = data.source
+        } else {
+          source = sourceQuery
+        }
+      }
+
+      await Price.query().upsertGraph(
+        {
+          id: price.id,
+          source
+        },
+        {
+          insertMissing: true,
+          update: true,
+          relate: true
+        }
+      )
+
       resolve(price)
     } catch (err) {
       reject(err)

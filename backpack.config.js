@@ -9,6 +9,7 @@ module.exports = {
     // config.entry.main = ['./api/server.js', './reports/index.js']
     config.entry = {
       scraper: './scraper.js',
+      historicalScraper: './historical-scraper.js',
       server: './server.js'
     }
 
