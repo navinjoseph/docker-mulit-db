@@ -50,7 +50,8 @@
     "precommit": "lint-staged",
     "build": "backpack build",
     "heroku-postbuild": "yarn run db:migrate && yarn run build",
-    "db:migrate": "knex migrate:latest --knexfile ./db/knexfile.js"
+    "db:migrate": "knex migrate:latest --knexfile ./db/knexfile.js",
+    "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
   },
   "lint-staged": {
     "*.js": ["prettier --write", "eslint --fix", "git add"]
