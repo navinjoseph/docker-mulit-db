@@ -33,12 +33,13 @@ export const insertPrice = data => {
       })
 
       let source = null
-      const sourceQuery = await Source.query().where('name', data.source.name)
-
-      if (sourceQuery.length === 0) {
-        source = data.source
-      } else {
-        source = sourceQuery
+      if (data.source) {
+        const sourceQuery = await Source.query().where('name', data.source.name)
+        if (sourceQuery.length === 0) {
+          source = data.source
+        } else {
+          source = sourceQuery
+        }
       }
 
       await Price.query().upsertGraph(
