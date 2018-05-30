@@ -19,7 +19,7 @@ router.get('/history', async (req, res) => {
       throw new Error('Timestamp is required')
     }
 
-    const timestamp = new Date(Number(req.query.timestamp))
+    const timestamp = new Date(Number(req.query.timestamp)).toISOString()
     const coin = await Coin.query().where(raw(`UPPER(ticker) = ?`, [req.query.symbol.toUpperCase()]))
 
     if (coin.length === 0) {
@@ -28,7 +28,7 @@ router.get('/history', async (req, res) => {
 
     const price = await coin[0]
       .$relatedQuery('prices')
-      .orderBy(raw(`abs(extract(epoch FROM (created_at - timestamp ??)))`, timestamp))
+      .orderBy(raw(`abs(extract(epoch FROM (price."timestamp" - timestamp '${timestamp}')))`))
       .limit(1)
 
     const response = {
