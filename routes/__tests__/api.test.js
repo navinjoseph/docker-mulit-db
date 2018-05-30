@@ -31,6 +31,11 @@ describe('GET /api/v1/history', () => {
     expect(keys).toEqual(['timestamp', 'usdPrice', 'ticker', 'name'])
   })
 
+  it('should return closest date', async () => {
+    const response = await request(app).get('/api/v1/history?symbol=ltc&timestamp=1367141400000')
+    expect(response.body.timestamp).toContain('2013-04-28')
+  })
+
   it('should return 400 if coin cant be found', async () => {
     const response = await request(app).get('/api/v1/history?symbol=ABC&timestamp=1527034971544')
     expect(response.statusCode).toBe(400)
