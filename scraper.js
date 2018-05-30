@@ -33,7 +33,7 @@ async function requestData () {
         usdPrice: sanatizedPrice,
         ticker: coin.ticker,
         source: {
-          name: 'crimson',
+          name: 'crimson-realtime',
           description: 'Crimson historical data'
         }
       })

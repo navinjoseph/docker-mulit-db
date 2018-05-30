@@ -35,7 +35,7 @@ async function requestData () {
           timestamp: openDate,
           usdPrice: price.open,
           source: {
-            name: 'crimson',
+            name: 'crimson-historical',
             description: 'Crimson historical data'
           }
         })
@@ -51,7 +51,7 @@ async function requestData () {
           timestamp: closeDate,
           usdPrice: price.close,
           source: {
-            name: 'crimson'
+            name: 'crimson-historical'
           }
         })
 
