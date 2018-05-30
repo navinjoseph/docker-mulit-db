@@ -19,6 +19,7 @@
     "pg": "^7.4.3",
     "raven": "^2.6.2",
     "superagent": "^3.8.2",
+    "throng": "^4.0.0",
     "winston": "^2.4.2"
   },
   "devDependencies": {
@@ -58,7 +59,11 @@
     "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "eslint --fix", "git add"]
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
