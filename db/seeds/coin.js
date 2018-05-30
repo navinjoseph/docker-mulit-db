@@ -4,12 +4,10 @@ exports.seed = function (knex, Promise) {
     .then(() => {
       return knex('coin').insert([
         {
-          id: 1,
           ticker: 'BTC',
           name: 'Bitcoin'
         },
         {
-          id: 2,
           ticker: 'LTC',
           name: 'Litecoin'
         }
