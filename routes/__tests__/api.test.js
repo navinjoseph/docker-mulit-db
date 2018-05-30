@@ -13,16 +13,16 @@ beforeEach(async () => {
   }
 })
 
-describe('GET /api', () => {
+describe('GET /api/v1', () => {
   it('Should return 200', async () => {
-    const response = await request(app).get('/api')
+    const response = await request(app).get('/api/v1')
     expect(response.statusCode).toBe(200)
   })
 })
 
-describe('GET /api/history', () => {
+describe('GET /api/v1/history', () => {
   it('Should return 200', async () => {
-    const response = await request(app).get('/api/history?symbol=BTC&timestamp=1527034971544')
+    const response = await request(app).get('/api/v1/history?symbol=BTC&timestamp=1527034971544')
     expect(response.statusCode).toBe(200)
     expect(response.body.ticker).toBe('BTC')
     expect(response.body.name).toBe('Bitcoin')
@@ -32,17 +32,17 @@ describe('GET /api/history', () => {
   })
 
   it('should return 400 if coin cant be found', async () => {
-    const response = await request(app).get('/api/history?symbol=ABC&timestamp=1527034971544')
+    const response = await request(app).get('/api/v1/history?symbol=ABC&timestamp=1527034971544')
     expect(response.statusCode).toBe(400)
   })
 
   it('Should return 400 if no timestamp', async () => {
-    const response = await request(app).get('/api/history?symbol=BTC')
+    const response = await request(app).get('/api/v1/history?symbol=BTC')
     expect(response.statusCode).toBe(400)
   })
 
   it('Should return 400 if no symbol', async () => {
-    const response = await request(app).get('/api/history')
+    const response = await request(app).get('/api/v1/history')
     expect(response.statusCode).toBe(400)
   })
 })
