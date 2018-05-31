@@ -2,6 +2,7 @@ import express from 'express'
 import Coin from '../db/models/coin'
 import { raw } from 'objection'
 import Raven from '../raven/'
+import authenticate from '../middleware/auth'
 
 const router = express.Router()
 
@@ -9,7 +10,7 @@ router.get('/', (req, res) => {
   res.send('api')
 })
 
-router.get('/history', async (req, res) => {
+router.get('/history', authenticate, async (req, res) => {
   try {
     if (!req.query.symbol) {
       throw new Error('Symbol is required')
