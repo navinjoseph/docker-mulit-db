@@ -4,7 +4,7 @@
 
 ## Documentation
 
-Example API URL: https://tt-history-db.herokuapp.com/api/v1/history?symbol=ven&timestamp=1527034971544
+Example API URL: https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544
 
 | Query Parameter | Description                                                                                    |
 | --------------- | ---------------------------------------------------------------------------------------------- |
