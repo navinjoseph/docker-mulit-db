@@ -9,6 +9,8 @@ exports.up = (knex, Promise) => {
 
 exports.down = (knex, Promise) => {
   return knex.schema.table('price', table => {
-    table.dropColumn('source_id')
+    if (process.env.NODE_ENV !== 'production') {
+      table.dropColumn('source_id')
+    }
   })
 }

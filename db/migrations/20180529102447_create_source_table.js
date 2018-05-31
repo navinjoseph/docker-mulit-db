@@ -10,5 +10,7 @@ exports.up = function (knex, Promise) {
 }
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('source')
+  if (process.env.NODE_ENV !== 'production') {
+    return knex.schema.dropTableIfExists('source')
+  }
 }
