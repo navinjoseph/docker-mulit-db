@@ -28,8 +28,6 @@ const authenticate = (req, res, next) => {
     }
   }
 
-  console.log('hiiiii')
-
   permit.fail(res)
   next(new Error(`Authentication invalid!`))
 }
