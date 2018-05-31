@@ -14,5 +14,7 @@ exports.up = function (knex, Promise) {
 }
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('coin')
+  if (process.env.NODE_ENV !== 'production') {
+    return knex.schema.dropTableIfExists('coin')
+  }
 }
