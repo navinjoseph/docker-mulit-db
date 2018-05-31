@@ -2,8 +2,13 @@ import express from 'express'
 import Coin from '../db/models/coin'
 import { raw } from 'objection'
 import Raven from '../raven/'
+import authenticate from '../middleware/auth'
 
 const router = express.Router()
+
+router.get('/restricted', authenticate, (req, res) => {
+  res.send('Restricted content!')
+})
 
 router.get('/', (req, res) => {
   res.send('api')
