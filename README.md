@@ -4,7 +4,7 @@
 
 ## Documentation
 
-Example API URL: https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544
+Example API URL: https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544&access_token=7c96053e681f16e90aaefd33566ed1fc
 
 | Query Parameter | Description                                                                                    |
 | --------------- | ---------------------------------------------------------------------------------------------- |
