@@ -22,6 +22,11 @@ exports.seed = function (knex, Promise) {
           timestamp: new Date('2013-04-28T09:30:00').toISOString(),
           usdPrice: 120,
           coinId: 2
+        },
+        {
+          timestamp: new Date('2013-04-28T09:30:00').toISOString(),
+          usdPrice: 300,
+          coinId: 3
         }
       ])
     })

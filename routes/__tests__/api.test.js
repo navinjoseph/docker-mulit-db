@@ -44,7 +44,9 @@ describe('GET /api/v1/history', () => {
     expect(response.body.name).toBe('Bitcoin')
 
     const keys = Object.keys(response.body)
-    expect(keys).toEqual(['timestamp', 'usdPrice', 'ticker', 'name'])
+    expect(keys).toEqual(['price', 'timestamp', 'ticker', 'name'])
+    const price = Object.keys(response.body.price)
+    expect(price).toEqual(['USD', 'BTC', 'ETH'])
   })
 
   it('should return closest date', async () => {

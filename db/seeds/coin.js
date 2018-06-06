@@ -10,6 +10,14 @@ exports.seed = function (knex, Promise) {
         {
           ticker: 'LTC',
           name: 'Litecoin'
+        },
+        {
+          ticker: 'ETH',
+          name: 'Ethereum'
+        },
+        {
+          ticker: 'ZRX',
+          name: '0x'
         }
       ])
     })
