@@ -2,7 +2,7 @@
 
 **Example API URL:**
 
-https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544&access_token=xxx
+[https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544&access_token=xxx](https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544&access_token=xxx)
 
 | Query Parameter | Description                                                                                    |
 | --------------- | ---------------------------------------------------------------------------------------------- |
@@ -27,4 +27,4 @@ https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544&ac
 
 ## API Support
 
-For support or sales inquiries email: alex@tokentax.us
+For support or sales inquiries email: [alex@tokentax.us](mailto:alex@tokentax.us)
