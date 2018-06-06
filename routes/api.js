@@ -6,9 +6,11 @@ import authenticate from '../middleware/auth'
 
 const router = express.Router()
 
+/*
 router.get('/', (req, res) => {
   res.send('api')
 })
+*/
 
 router.get('/history', authenticate, async (req, res) => {
   try {

@@ -1,0 +1,23 @@
+html
+  head
+    title= title
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css', type='text/css' )
+    style(type="text/css").
+      .markdown-body {
+        max-width: 800px;
+        margin: 50px auto;
+        line-height: 1.5;
+        padding: 0 20px;
+      }
+  body.markdown-body
+    :markdown-it(linkify langPrefix='highlight-')
+      ## TokenTax Pricing API
+      **Example API URL:**
+      
+      https://pricing.tokentax.us/api/v1/history?symbol=ven&timestamp=1527034971544&access_token=xxx
+
+      | Query Parameter | Description                                                                                    |
+      | --------------- | ---------------------------------------------------------------------------------------------- |
+      | `symbol`        | Cryptocurrency ticker symbol                                                                   |
+      | `timestamp`     | A timestamp in js. You can get this date format from doing `Date.now()` or `dateVar.getTime()` |
+      | `access_token`  | Token to access the API                                                                        |
