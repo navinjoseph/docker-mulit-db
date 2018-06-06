@@ -60,8 +60,8 @@ router.get('/history', authenticate, async (req, res) => {
         ETH: price[0].usdPrice / ethPrice[0].usdPrice
       },
       timestamp: price[0].timestamp,
-      ticker: coin[0].ticker,
-      name: coin[0].name
+      ticker: coin[queryIndex].ticker,
+      name: coin[queryIndex].name
     }
 
     delete response.id
