@@ -13,6 +13,7 @@
     "cryptocurrencies": "^3.0.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "jstransformer-markdown-it": "^2.1.0",
     "knex": "^0.14.6",
     "moment": "^2.22.1",
     "morgan": "^1.9.0",
@@ -20,6 +21,7 @@
     "objection": "^1.1.8",
     "permit": "^0.2.2",
     "pg": "^7.4.3",
+    "pug": "^2.0.3",
     "raven": "^2.6.2",
     "superagent": "^3.8.2",
     "throng": "^4.0.0",
@@ -62,11 +64,7 @@
     "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "eslint --fix", "git add"]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
