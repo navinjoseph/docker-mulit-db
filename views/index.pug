@@ -9,6 +9,13 @@ html
         line-height: 1.5;
         padding: 0 20px;
       }
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-111243721-2')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-111243721-2');
+
   body.markdown-body
     :markdown-it(linkify langPrefix='highlight-')
       # TokenTax Pricing API
