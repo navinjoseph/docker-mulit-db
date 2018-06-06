@@ -49,6 +49,14 @@ describe('GET /api/v1/history', () => {
     expect(price).toEqual(['USD', 'BTC', 'ETH'])
   })
 
+  it('should return same ticker as query', async () => {
+    const response = await request(app).get(
+      '/api/v1/history?symbol=LTC&timestamp=1527034971544&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    expect(response.statusCode).toBe(200)
+    expect(response.body.ticker).toBe('LTC')
+  })
+
   it('should return closest date', async () => {
     const response = await request(app).get(
       '/api/v1/history?symbol=ltc&timestamp=1367141400000&access_token=7c96053e681f16e90aaefd33566ed1fc'
