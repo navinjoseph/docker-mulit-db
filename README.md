@@ -4,7 +4,7 @@
 
 ## Documentation
 
-See index.pug
+See https://github.com/TokenTax/pricing/blob/master/views/docs.md
 
 ## Develop locally
 
