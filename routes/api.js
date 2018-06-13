@@ -12,6 +12,45 @@ router.get('/', (req, res) => {
 })
 */
 
+router.get('/range', authenticate, async (req, res) => {
+  try {
+    if (!req.query.symbol) {
+      throw new Error('Symbol is required')
+    }
+
+    if (!req.query.start || !req.query.end) {
+      throw new Error('Start and end is required')
+    }
+
+    const querySymbol = req.query.symbol.toUpperCase().split(',')
+    const coins = await Coin.query().whereIn('ticker', querySymbol)
+
+    const start = new Date(+req.query.start)
+    const end = new Date(+req.query.end)
+
+    const pricePromises = coins.map(async coin => {
+      return coin
+        .$relatedQuery('prices')
+        .whereBetween('timestamp', [start, end])
+        .orderBy('timestamp')
+    })
+
+    const priceData = await Promise.all(pricePromises)
+
+    const response = querySymbol.reduce((acc, val, index) => {
+      return {
+        ...acc,
+        [val]: priceData[index]
+      }
+    }, {})
+
+    res.json(response)
+  } catch (err) {
+    Raven.captureException(err)
+    res.status(400).send({ error: err.message })
+  }
+})
+
 router.get('/history', authenticate, async (req, res) => {
   try {
     if (!req.query.symbol) {

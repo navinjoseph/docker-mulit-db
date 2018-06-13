@@ -83,3 +83,42 @@ describe('GET /api/v1/history', () => {
     expect(response.statusCode).toBe(400)
   })
 })
+
+describe('GET /range', () => {
+  it('should return a date range for one coin', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=ltc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    expect(response.body).toHaveProperty('LTC')
+  })
+
+  it('should return a date range for list of coins', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=ltc,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    expect(response.body).toHaveProperty('LTC')
+    expect(response.body).toHaveProperty('BTC')
+  })
+
+  it('should return a date range for multiple coins', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=ltc,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    expect(response.body.BTC).toHaveLength(2)
+  })
+
+  it('should return 400 when no no start and end', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=ltc,btc&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    expect(response.status).toBe(400)
+  })
+
+  it('should return empty arrays when end is before start', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=ltc,btc&end=1483228800000&start=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    expect(response.body.LTC).toHaveLength(0)
+    expect(response.body.BTC).toHaveLength(0)
+  })
+})
