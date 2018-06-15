@@ -1,7 +1,8 @@
 // Should be refactored by both the client and server
 export const sanatizeCurrency = currency => {
   const reassign = {
-    IOT: 'MIOTA'
+    IOT: 'MIOTA',
+    PROPS: 'PRO'
   }
 
   if (reassign[currency]) {

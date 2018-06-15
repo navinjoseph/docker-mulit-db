@@ -8,4 +8,8 @@ describe('sanatizeCurrency()', () => {
   it('should return renamed currency if found', () => {
     expect(sanatizeCurrency('IOT')).toBe('MIOTA')
   })
+
+  it('should return renamed currency if found', () => {
+    expect(sanatizeCurrency('PROPS')).toBe('PRO')
+  })
 })
