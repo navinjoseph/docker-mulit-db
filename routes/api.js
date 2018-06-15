@@ -3,14 +3,9 @@ import Coin from '../db/models/coin'
 import { raw } from 'objection'
 import Raven from '../raven/'
 import authenticate from '../middleware/auth'
+import { sanatizeCurrency } from '../utils/convert'
 
 const router = express.Router()
-
-/*
-router.get('/', (req, res) => {
-  res.send('api')
-})
-*/
 
 router.get('/range', authenticate, async (req, res) => {
   try {
@@ -22,7 +17,10 @@ router.get('/range', authenticate, async (req, res) => {
       throw new Error('Start and end is required')
     }
 
-    const querySymbol = req.query.symbol.toUpperCase().split(',')
+    const querySymbol = req.query.symbol
+      .toUpperCase()
+      .split(',')
+      .map(item => sanatizeCurrency(item))
     const coins = await Coin.query().whereIn('ticker', querySymbol)
 
     const start = new Date(+req.query.start)
