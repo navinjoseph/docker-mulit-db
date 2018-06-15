@@ -37,7 +37,22 @@ router.get('/range', authenticate, async (req, res) => {
 
     const priceData = await Promise.all(pricePromises)
 
+    const fallbackPricePromises = priceData.filter(arr => arr.length === 0).map(async (item, index) => {
+      return coins[index]
+        .$relatedQuery('prices')
+        .orderBy(raw(`abs(extract(epoch FROM (price."timestamp" - timestamp '${start.toISOString()}')))`))
+        .limit(1)
+    })
+
+    const fallbackData = await Promise.all(fallbackPricePromises)
+
     const response = querySymbol.reduce((acc, val, index) => {
+      if (priceData[index].length === 0) {
+        return {
+          ...acc,
+          [val]: fallbackData[index]
+        }
+      }
       return {
         ...acc,
         [val]: priceData[index]

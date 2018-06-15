@@ -24,6 +24,10 @@ module.exports = {
       user: process.env.CIRCLECI ? 'circle_test' : undefined,
       database: 'tt_history_test'
     },
+    pool: {
+      min: 2,
+      max: 100
+    },
     migrations: {
       tableName: 'knex_migrations',
       directory: path.join(__dirname, '/migrations')
