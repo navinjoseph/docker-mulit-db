@@ -45,7 +45,7 @@ router.get('/range', authenticate, async (req, res) => {
     const fallbackData = await Promise.all(fallbackPricePromises)
 
     const response = querySymbol.reduce((acc, val, index) => {
-      if (priceData[index].length === 0) {
+      if (!priceData[index] || !priceData[index].length || priceData[index].length === 0) {
         return {
           ...acc,
           [val]: fallbackData[index]
@@ -59,6 +59,8 @@ router.get('/range', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
+    console.log(err)
+
     Raven.captureException(err)
     res.status(400).send({ error: err.message })
   }
