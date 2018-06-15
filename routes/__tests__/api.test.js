@@ -121,4 +121,13 @@ describe('GET /range', () => {
     expect(response.body.LTC).toHaveLength(0)
     expect(response.body.BTC).toHaveLength(0)
   })
+
+  it.only('should return closest date if not found in range', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=ltc,btc&start=1498321400000&end=1498352336000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+    console.log(response.body)
+
+    expect(response.body.BTC.length).toBeGreaterThan(0)
+  })
 })
