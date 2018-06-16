@@ -114,15 +114,16 @@ describe('GET /range', () => {
     expect(response.status).toBe(400)
   })
 
-  it('should return empty arrays when end is before start', async () => {
+  it('should return single item when end is before start', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=ltc,btc&end=1483228800000&start=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
     )
-    expect(response.body.LTC).toHaveLength(0)
-    expect(response.body.BTC).toHaveLength(0)
+
+    expect(response.body.LTC).toHaveLength(1)
+    expect(response.body.BTC).toHaveLength(1)
   })
 
-  it.only('should return closest date if not found in range', async () => {
+  it('should return closest date if not found in range', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=ltc,btc&start=1498321400000&end=1498352336000&access_token=7c96053e681f16e90aaefd33566ed1fc'
     )

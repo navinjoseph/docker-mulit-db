@@ -22,10 +22,8 @@ const authenticate = (req, res, next) => {
 
   const keys = Object.values(apiKeys)
 
-  for (const key of keys) {
-    if (key === token) {
-      return next()
-    }
+  if (keys.indexOf(token) > -1) {
+    return next()
   }
 
   permit.fail(res)

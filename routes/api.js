@@ -59,8 +59,6 @@ router.get('/range', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    console.log(err)
-
     Raven.captureException(err)
     res.status(400).send({ error: err.message })
   }
