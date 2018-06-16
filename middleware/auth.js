@@ -7,7 +7,7 @@ const permit = new Bearer({
 
 const apiKeys = {
   tokentax: '7c96053e681f16e90aaefd33566ed1fc',
-  balance: '05b048d7242cb7b8b57cfa3b1d65ecea'
+  coinfox: 'd41d8cd98f00b204e9800998ecf8427e'
 }
 
 const authenticate = (req, res, next) => {
