@@ -22,6 +22,8 @@ describe('GET /api/v1', () => {
 })
 */
 
+const token = '7c96053e681f16e90aaefd33566ed1fc'
+
 describe('GET /api/v1/history', () => {
   it('should fail with no auth', async () => {
     const response = await request(app).get('/api/v1/history?symbol=BTC&timestamp=1527034971544')
@@ -114,6 +116,11 @@ describe('GET /range', () => {
     expect(response.status).toBe(400)
   })
 
+  it('should return 400 when no coin', async () => {
+    const response = await request(app).get('/api/v1/range?access_token=7c96053e681f16e90aaefd33566ed1fc')
+    expect(response.status).toBe(400)
+  })
+
   it('should return single item when end is before start', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=ltc,btc&end=1483228800000&start=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
@@ -129,5 +136,15 @@ describe('GET /range', () => {
     )
 
     expect(response.body.BTC.length).toBeGreaterThan(0)
+  })
+})
+
+describe('GET /current', () => {
+  it('should return certain properties', async () => {
+    const response = await request(app).get(`/api/v1/current?access_token=${token}`)
+
+    const keys = Object.keys(response.body[0])
+    expect(response.body).toHaveLength(4)
+    expect(keys).toEqual(['timestamp', 'usd_price', 'coin_id', 'name', 'ticker'])
   })
 })

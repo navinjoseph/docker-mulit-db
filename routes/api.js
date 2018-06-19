@@ -1,11 +1,40 @@
 import express from 'express'
 import Coin from '../db/models/coin'
+import knex from '../db/'
 import { raw } from 'objection'
 import Raven from '../raven/'
 import authenticate from '../middleware/auth'
 import { sanatizeCurrency } from '../utils/convert'
 
 const router = express.Router()
+
+router.get('/current', authenticate, async (req, res) => {
+  try {
+    const query = `
+    SELECT
+      p.timestamp, p.usd_price, p.coin_id, name, ticker
+    FROM
+      coin AS c,
+      LATERAL (
+        SELECT
+          pi.*
+        FROM
+          price AS pi
+        WHERE
+          pi.coin_id = c.id
+        ORDER BY
+            pi. "timestamp" DESC
+        LIMIT 1) 
+      AS p
+    `
+
+    const data = await knex.raw(query)
+    res.json(data.rows)
+  } catch (err) {
+    Raven.captureException(err)
+    res.status(400).send({ error: err.message })
+  }
+})
 
 router.get('/range', authenticate, async (req, res) => {
   try {
