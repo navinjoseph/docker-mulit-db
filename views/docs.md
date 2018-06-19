@@ -12,9 +12,9 @@
 | `timestamp`     | A timestamp in js. You can get this date format from doing `Date.now()` or `dateVar.getTime()` |
 | `access_token`  | Token to access the API                                                                        |
 
-**Response**
+#### Response
 
-```
+```json
 {
   "price": {
     "USD": 0.321454,
@@ -36,9 +36,9 @@
 | `end`           | End of range. A timestamp in js. You can get this date format from doing `Date.now()` or `dateVar.getTime()`   |
 | `access_token`  | Token to access the API                                                                                        |
 
-**Response**
+#### Response
 
-```
+```json
 {
   "LTC": [
     {
@@ -49,7 +49,7 @@
       "createdAt": "2018-05-30T02:57:26.071Z",
       "updatedAt": "2018-05-30T02:57:26.078Z",
       "sourceId": 1
-    },
+    }
   ],
   "BTC": [
     {
@@ -60,9 +60,39 @@
       "createdAt": "2018-05-30T02:58:26.494Z",
       "updatedAt": "2018-05-30T02:58:26.503Z",
       "sourceId": 1
-    },
+    }
   ]
 }
+```
+
+### /api/v1/current
+
+Returns the most recent price for every coin
+
+| Query Parameter | Description             |
+| --------------- | ----------------------- |
+| `access_token`  | Token to access the API |
+
+#### Response
+
+```json
+[
+  {
+    "timestamp": "2018-05-29T20:00:00.000Z",
+    "usd_price": 7526.42,
+    "coin_id": 1,
+    "name": "Bitcoin",
+    "ticker": "BTC"
+  },
+  {
+    "timestamp": "2018-05-29T20:00:00.000Z",
+    "usd_price": 121.96,
+    "coin_id": 2,
+    "name": "Litecoin",
+    "ticker": "LTC"
+  },
+  ...
+]
 ```
 
 ## API Support
