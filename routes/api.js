@@ -31,7 +31,8 @@ router.get('/current', authenticate, async (req, res) => {
     const data = await knex.raw(query)
     res.json(data.rows)
   } catch (err) {
-    Raven.captureException(400).send({ error: err.message })
+    Raven.captureException(err)
+    res.status(400).send({ error: err.message })
   }
 })
 

@@ -116,6 +116,11 @@ describe('GET /range', () => {
     expect(response.status).toBe(400)
   })
 
+  it('should return 400 when no coin', async () => {
+    const response = await request(app).get('/api/v1/range?access_token=7c96053e681f16e90aaefd33566ed1fc')
+    expect(response.status).toBe(400)
+  })
+
   it('should return single item when end is before start', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=ltc,btc&end=1483228800000&start=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
