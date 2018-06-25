@@ -5,10 +5,11 @@ import { raw } from 'objection'
 import Raven from '../raven/'
 import authenticate from '../middleware/auth'
 import { sanatizeCurrency } from '../utils/convert'
+import cache from '../middleware/cache'
 
 const router = express.Router()
 
-router.get('/current', authenticate, async (req, res) => {
+router.get('/current', authenticate, cache(10), async (req, res) => {
   try {
     const query = `
     SELECT
