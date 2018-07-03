@@ -21,14 +21,16 @@ describe('Fetch currency list', () => {
 describe('fetch single currency', () => {
   it('should return the html from CMC', async () => {
     const html = await fetchCurrency('bitcoin', request)
-    expect(html).toContain('<h1 class="details-panel-name">')
+    expect(html).toContain('data-currency-price')
+    expect(html).toContain('data-usd')
     expect(html).toContain('Bitcoin')
     expect(html).toContain('</html>')
   })
 
   it('should return VEN from CMC', async () => {
     const html = await fetchCurrency('Vechain', request)
-    expect(html).toContain('<h1 class="details-panel-name">')
+    expect(html).toContain('data-currency-price')
+    expect(html).toContain('data-usd')
     expect(html).toContain('VeChain')
     expect(html).toContain('</html>')
   })
