@@ -9,6 +9,8 @@ const port = process.env.PORT || 3000
 const WORKERS = process.env.WEB_CONCURRENCY || 1
 const { NODE_ENV } = process.env
 
+console.log({ NODE_ENV })
+
 function startApp () {
   app.listen(port, () => {
     winston.info('Magic happens on port ' + port)

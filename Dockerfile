@@ -15,6 +15,8 @@ RUN yarn install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+ENV PORT 3000
+EXPOSE 3000
+
 RUN yarn run build
 CMD yarn run prod
