@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tt-pricing-dep
+  labels:
+    #Project ID
+    app: tt-pricing
+spec:
+  #Run two instances of our application
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: tt-pricing
+    spec:
+      #Container details
+      containers:
+        - name: node-app
+          image: gcr.io/tokentax-infra-209601/pricing:v1
+          imagePullPolicy: Always
+          #Ports to expose
+          ports:
+          - containerPort: 3000
