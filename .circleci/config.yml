@@ -38,7 +38,7 @@ jobs:
     docker:
       - image: google/cloud-sdk
         environment:
-          PROJECT_ID: tokentax-infra-209601
+          GOOGLE_PROJECT_ID: tokentax-infra-209601
           CLUSTER_NAME: tt-cluster
           COMPUTE_ZONE: us-east1-c
           #As specified in Deployment.yml
@@ -51,24 +51,30 @@ jobs:
       - run:
           name: Decode Service Account
           command: base64 -i key.txt -d > ${HOME}/gcloud-service-key.json
-      # Authenticate CircleCI with the service account file
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${ACCOUNT_ID} --key-file ${HOME}/gcloud-service-key.json
-      # Set the default project
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud config set project $GOOGLE_PROJECT_ID
-      # Set the default container
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
-      # Set the compute zone
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone $COMPUTE_ZONE
-      # Get the cluster credentials.
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+      # # Authenticate CircleCI with the service account file
+      # - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${ACCOUNT_ID} --key-file ${HOME}/gcloud-service-key.json
+      # # Set the default project
+      # - run: sudo /opt/google-cloud-sdk/bin/gcloud config set project $GOOGLE_PROJECT_ID
+      # # Set the default container
+      # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
+      # # Set the compute zone
+      # - run: sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone $COMPUTE_ZONE
+      # # Get the cluster credentials.
+      # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+      - run: |
+          sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          sudo gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          sudo gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
+          
       # Start good old Docker
       - run: sudo service docker start
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
-      - run: docker build -t gcr.io/${PROJECT_ID}/node-app:$CIRCLE_SHA1 .
+      - run: docker build -t gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1 .
       # Push the Image to the GCP Container Registry
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${PROJECT_ID}/node-app:$CIRCLE_SHA1
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1
       # Update the default image for the deployment
-      - run: sudo /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${PROJECT_ID}/node-app:$CIRCLE_SHA1
+      - run: sudo /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/node-app:${CIRCLE_SHA1}
 
 workflows:
   version: 2
