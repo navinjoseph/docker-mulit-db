@@ -62,19 +62,19 @@ jobs:
       # # Get the cluster credentials.
       # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
       - run: |
-          sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          sudo gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-          sudo gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
+          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
           
       # Start good old Docker
-      - run: sudo service docker start
+      - run: service docker start
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
       - run: docker build -t gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1 .
       # Push the Image to the GCP Container Registry
-      - run: sudo /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1
+      - run: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1
       # Update the default image for the deployment
-      - run: sudo /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/node-app:${CIRCLE_SHA1}
+      - run: /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/node-app:${CIRCLE_SHA1}
 
 workflows:
   version: 2
