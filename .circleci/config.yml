@@ -10,11 +10,7 @@ jobs:
       - image: circleci/node:9.11
         environment:
             GOOGLE_PROJECT_ID: tokentax-infra-209601
-            CLUSTER_NAME: tt-cluster
-            COMPUTE_ZONE: us-east1-c
-            #As specified in Deployment.yml
-            DEPLOYMENT_NAME: tt-pricing-dep
-            CONTAINER_NAME: pricing
+            CONTAINER_NAME: tt-pricing
     steps:
       - checkout
       - setup_remote_docker
@@ -77,7 +73,7 @@ jobs:
           COMPUTE_ZONE: us-east1-c
           #As specified in Deployment.yml
           DEPLOYMENT_NAME: tt-pricing-dep
-          CONTAINER_NAME: pricing
+          CONTAINER_NAME: tt-pricing
     steps:
       - checkout
       - setup_remote_docker
@@ -109,7 +105,7 @@ jobs:
       - run: 
           name: Set deployment image
           command: kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1
-        
+      
 workflows:
   version: 2
   test_and_deploy:

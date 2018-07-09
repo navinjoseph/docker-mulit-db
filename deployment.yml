@@ -15,8 +15,8 @@ spec:
     spec:
       #Container details
       containers:
-        - name: node-app
-          image: gcr.io/tokentax-infra-209601/pricing:v1
+        - name: tt-pricing
+          image: gcr.io/tokentax-infra-209601/tt-pricing
           imagePullPolicy: Always
           #Ports to expose
           ports:
