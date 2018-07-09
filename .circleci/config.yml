@@ -80,7 +80,7 @@ jobs:
       # Update the default image for the deployment
       # - run: /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/pricing:${CIRCLE_SHA1}
   
-  deploy-job:
+  deploy:
       docker:
         - image: my-image-version-tag
       working_directory: /tmp/my-project  
