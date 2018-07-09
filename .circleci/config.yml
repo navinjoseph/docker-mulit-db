@@ -72,6 +72,7 @@ jobs:
       # Start good old Docker
       # - run: service docker start
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
+      - checkout
       - run: ls
       - run: docker build -t pricing:$CIRCLE_SHA1 .
       # Push the Image to the GCP Container Registry
