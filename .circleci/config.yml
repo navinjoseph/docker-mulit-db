@@ -45,6 +45,8 @@ jobs:
           DEPLOYMENT_NAME: tt-pricing-dep
           CONTAINER_NAME: pricing
     steps:
+      - checkout
+      - run: ls
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > key.txt
@@ -73,8 +75,7 @@ jobs:
       # - run: service docker start
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
       
-      - run: ls
-      - checkout
+      
       - run: docker build -t pricing:${CIRCLE_SHA1} .
       - run:
           name: Deploy Master to GKE
@@ -89,7 +90,7 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - test
+      # - test
       - deploy
           # requires:
           #   - test
