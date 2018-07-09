@@ -81,8 +81,11 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: ls
-
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load docker image from cache
+          command: docker load --input docker-cache/built-image.tar
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > key.txt
@@ -96,20 +99,12 @@ jobs:
       - run: gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
       
       - run: 
-          name: building docker image
-          command: docker build --rm=false -t gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1 .
+          name: tag docker image with latest
+          command: docker tag gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1 gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:latest
 
       - run:
           name: Deploy Master to GKE
           command: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1
-
-      - run: 
-          name: tag docker image with latest
-          command: docker tag gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1 gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:latest
-
-      # Push the Image to the GCP Container Registry
-      # - run: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1
-      # Update the default image for the deployment
 
       - run: 
           name: Set deployment image
