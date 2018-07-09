@@ -57,7 +57,6 @@ jobs:
         environment:
           POSTGRES_USER: circle_test
           POSTGRES_DB: tt_history_test
-
     steps:
       - checkout
       - restore_cache:
@@ -65,7 +64,6 @@ jobs:
             - node-modules-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - node-modules-
-        
       - run: yarn test
       
   deploy:
@@ -93,22 +91,16 @@ jobs:
       - run:
           name: Decode Service Account
           command: base64 -i key.txt -d > ${HOME}/gcloud-service-key.json
-
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run: gcloud --quiet config set compute/zone ${COMPUTE_ZONE}
       - run: gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
-      
       - run: 
-          name: tag docker image with latest
+          name: Tag docker image with latest
           command: docker tag gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1 gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:latest
-
       - run:
           name: Deploy Master to GKE
           command: gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}
-
-      - run: kubectl get deployment
-
       - run: 
           name: Set deployment image
           command: kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}
@@ -124,6 +116,9 @@ workflows:
       - deploy:
           requires:
             - test
+          filters:
+            branches:
+              only: master
 
 
 
