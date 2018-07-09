@@ -16,7 +16,7 @@ spec:
       #Container details
       containers:
         - name: tt-pricing
-          image: gcr.io/tokentax-infra-209601/tt-pricing:$CIRCLE_SHA1
+          image: gcr.io/tokentax-infra-209601/tt-pricing
           imagePullPolicy: Always
           #Ports to expose
           ports:
