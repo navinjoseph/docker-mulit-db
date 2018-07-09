@@ -34,7 +34,7 @@ jobs:
         
       - run: yarn test
       
-  pre_deploy:
+  deploy:
     docker:
       - image: google/cloud-sdk
         environment:
