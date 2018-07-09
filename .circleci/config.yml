@@ -51,6 +51,8 @@ jobs:
       - run:
           name: Decode Service Account
           command: base64 -i key.txt -d > ${HOME}/gcloud-service-key.json
+      
+      - run: cat ${HOME}/gcloud-service-key.json
       # # Authenticate CircleCI with the service account file
       # - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${ACCOUNT_ID} --key-file ${HOME}/gcloud-service-key.json
       # # Set the default project
