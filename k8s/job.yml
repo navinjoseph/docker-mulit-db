@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: scrape-live
+spec:
+  template:
+    spec:
+      containers:
+      - name: tt-pricing
+        image: gcr.io/tokentax-infra-209601/tt-pricing:latest
+        imagePullPolicy: Always
+        command: ["node", "./build/scraper.js"]
+      restartPolicy: Never
+  backoffLimit: 4
