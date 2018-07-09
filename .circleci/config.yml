@@ -105,13 +105,13 @@ jobs:
 
       - run:
           name: Deploy Master to GKE
-          command: gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1
+          command: gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}
 
       - run: kubectl get deployment
 
       - run: 
           name: Set deployment image
-          command: kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1
+          command: kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}
       
 workflows:
   version: 2
