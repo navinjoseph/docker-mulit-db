@@ -4,14 +4,14 @@ metadata:
   name: tt-pricing-dep
   labels:
     #Project ID
-    app: tt-pricing
+    app: tokentax-infra-209601 
 spec:
   #Run two instances of our application
   replicas: 2
   template:
     metadata:
       labels:
-        app: tt-pricing
+        app: tokentax-infra-209601 
     spec:
       #Container details
       containers:
