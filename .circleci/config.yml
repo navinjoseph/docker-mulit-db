@@ -74,7 +74,7 @@ jobs:
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
       
       - run: ls
-      - run: docker build -t pricing:$CIRCLE_SHA1 .
+      
       # Push the Image to the GCP Container Registry
       # - run: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1
       # Update the default image for the deployment
@@ -85,6 +85,8 @@ jobs:
         - image: my-image-version-tag
       working_directory: /tmp/my-project  
       steps:
+        - checkout
+        - run: docker build -t pricing:${CIRCLE_SHA1} .
         - run:
             name: Deploy Master to GKE
             command: /opt/google-cloud-sdk/bin/gcloud docker -- push us.gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1
