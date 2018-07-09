@@ -35,6 +35,7 @@ jobs:
       - run: yarn test
       
   deploy:
+    working_directory: ~/pricing
     docker:
       - image: google/cloud-sdk
         environment:
@@ -46,45 +47,40 @@ jobs:
           CONTAINER_NAME: pricing
     steps:
       - checkout
+      - setup_remote_docker
       - run: ls
+
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > key.txt
       - run:
           name: Decode Service Account
           command: base64 -i key.txt -d > ${HOME}/gcloud-service-key.json
-      
+
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-
-      # # Authenticate CircleCI with the service account file
-      # - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${ACCOUNT_ID} --key-file ${HOME}/gcloud-service-key.json
-      # # Set the default project
-      # - run: sudo /opt/google-cloud-sdk/bin/gcloud config set project $GOOGLE_PROJECT_ID
-      # # Set the default container
-      # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
-      # # Set the compute zone
-      # - run: sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone $COMPUTE_ZONE
-      # # Get the cluster credentials.
-      # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
-
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run: gcloud --quiet config set compute/zone ${COMPUTE_ZONE}
       - run: gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
-          
-      # Start good old Docker
-      # - run: service docker start
-      # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
       
-      
-      - run: docker build -t pricing:${CIRCLE_SHA1} .
+      - run: 
+          name: building docker image
+          command: docker build --rm=false -t gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1 .
+
       - run:
           name: Deploy Master to GKE
-          command: /opt/google-cloud-sdk/bin/gcloud docker -- push us.gcr.io/${GOOGLE_PROJECT_ID}/pricing:${CIRCLE_SHA1}
+          command: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1
+
+      - run: 
+          name: tag docker image with latest
+          command: docker tag gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1 gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:latest
 
       # Push the Image to the GCP Container Registry
       # - run: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1
       # Update the default image for the deployment
-      # - run: /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/pricing:${CIRCLE_SHA1}
+
+      - run: 
+          name: Set deployment image
+          command: /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1
         
 workflows:
   version: 2
