@@ -70,7 +70,7 @@ jobs:
       - run: gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
           
       # Start good old Docker
-      - run: service docker start
+      # - run: service docker start
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
       - run: docker build -t gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1 .
       # Push the Image to the GCP Container Registry
