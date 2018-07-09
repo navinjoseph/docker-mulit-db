@@ -72,11 +72,11 @@ jobs:
       # Start good old Docker
       # - run: service docker start
       # Build a Docker image and use the Github commit hash ($CIRCLE_SHA1) as the tag
-      - run: docker build -t gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1 .
+      - run: docker build -t gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1 .
       # Push the Image to the GCP Container Registry
-      - run: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/node-app:$CIRCLE_SHA1
+      - run: /opt/google-cloud-sdk/bin/gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/pricing:$CIRCLE_SHA1
       # Update the default image for the deployment
-      - run: /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/node-app:${CIRCLE_SHA1}
+      - run: /opt/google-cloud-sdk/bin/kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/pricing:${CIRCLE_SHA1}
 
 workflows:
   version: 2
