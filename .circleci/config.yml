@@ -64,9 +64,9 @@ jobs:
       # - run: sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone $COMPUTE_ZONE
       # # Get the cluster credentials.
       # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
-      
+
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-      - run: gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      - run: gcloud --quiet config set compute/zone ${COMPUTE_ZONE}
       - run: gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
           
       # Start good old Docker
