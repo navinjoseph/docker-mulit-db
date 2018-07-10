@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: main-ingress
+spec:
+  rules:
+  - host: test.tokentax.us
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: tt-pricing-svc
+          servicePort: 3000
