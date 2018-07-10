@@ -21,6 +21,7 @@ spec:
           #Ports to expose
           ports:
             - containerPort: 3000
+          # Setting secrets: https://medium.com/google-cloud/kubernetes-configmaps-and-secrets-68d061f7ab5b
           env:
             - name: DATABASE_URL
               valueFrom:
