@@ -13,11 +13,11 @@ spec:
             image: gcr.io/tokentax-infra-209601/tt-pricing:latest
             imagePullPolicy: Always
             command: ["node", "./build/scraper.js"]
-            restartPolicy: OnFailure
             env:
             - name: PRICE_DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: pricing-db-url
                   key: PRICE_DATABASE_URL
+          restartPolicy: OnFailure
   
