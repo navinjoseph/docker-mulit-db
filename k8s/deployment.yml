@@ -28,3 +28,13 @@ spec:
             secretKeyRef:
               name: pricing-db-url
               key: PRICE_DATABASE_URL
+        - name: SENTRY_DSN_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: tt-pricing-config
+              key: SENTRY_DSN_SERVER
+        - name: SENTRY_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: tt-pricing-config
+              key: SENTRY_NAME

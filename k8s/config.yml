@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tt-pricing-config
+data:
+  SENTRY_DSN_SERVER: "https://d12f86768b3a42bd8abaa427bcb8257f@sentry.io/1215984"
+  SENTRY_NAME: "pricing"
