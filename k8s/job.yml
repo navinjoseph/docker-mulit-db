@@ -1,20 +1,23 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: batch/v1beta1
+kind: CronJob
 metadata:
   name: scrape-live
 spec:
-  template:
+  schedule: "*/10 * * * *"
+  jobTemplate:
     spec:
-      containers:
-      - name: tt-pricing
-        image: gcr.io/tokentax-infra-209601/tt-pricing:latest
-        imagePullPolicy: Always
-        command: ["node", "./build/scraper.js"]
-        env:
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                name: database-url
-                key: DATABASE_URL
-      restartPolicy: Never
-  backoffLimit: 4
+      template:
+        spec:
+          containers:
+          - name: tt-pricing
+            image: gcr.io/tokentax-infra-209601/tt-pricing:latest
+            imagePullPolicy: Always
+            command: ["node", "./build/scraper.js"]
+            restartPolicy: OnFailure
+            env:
+            - name: PRICE_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pricing-db-url
+                  key: PRICE_DATABASE_URL
+  

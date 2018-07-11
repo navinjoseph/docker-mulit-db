@@ -55,7 +55,7 @@ async function requestData () {
   winston.info('Finished')
   winston.info('env', {
     env: process.env.NODE_ENV,
-    db: process.env.DATABASE_URL
+    db: process.env.PRICE_DATABASE_URL
   })
 }
 

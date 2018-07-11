@@ -23,8 +23,8 @@ spec:
         - containerPort: 3000
         # Setting secrets: https://medium.com/google-cloud/kubernetes-configmaps-and-secrets-68d061f7ab5b
         env:
-        - name: DATABASE_URL
+        - name: PRICE_DATABASE_URL
           valueFrom:
             secretKeyRef:
               name: database-url
-              key: DATABASE_URL
+              key: PRICE_DATABASE_URL
