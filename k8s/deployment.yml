@@ -26,5 +26,5 @@ spec:
         - name: PRICE_DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: database-url
+              name: pricing-db-url
               key: PRICE_DATABASE_URL
