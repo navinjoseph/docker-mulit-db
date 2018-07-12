@@ -2,6 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: main-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
   - host: test.tokentax.us
@@ -10,4 +12,4 @@ spec:
       - path: /*
         backend:
           serviceName: tt-pricing-svc
-          servicePort: 3000
+          servicePort: 80

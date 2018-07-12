@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: scrape-live
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "*/30 * * * *"
   jobTemplate:
     spec:
       template:
@@ -19,5 +19,5 @@ spec:
                 secretKeyRef:
                   name: pricing-db-url
                   key: PRICE_DATABASE_URL
-          restartPolicy: OnFailure
+          restartPolicy: Never
   
