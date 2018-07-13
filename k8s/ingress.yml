@@ -11,3 +11,10 @@ spec:
         backend:
           serviceName: tt-pricing-svc
           servicePort: 80
+  - host: beta.tokentax.us
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: tt-pricing-svc
+          servicePort: 443
