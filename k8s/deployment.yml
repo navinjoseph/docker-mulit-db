@@ -8,6 +8,9 @@ metadata:
 spec:
   #Run two instances of our application
   replicas: 1
+  selector:
+    matchLabels:
+      app: tokentax-infra-209601 
   template:
     metadata:
       labels:
