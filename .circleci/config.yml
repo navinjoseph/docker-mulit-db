@@ -87,7 +87,7 @@ jobs:
           command: docker load --input docker-cache/built-image.tar
       - run:
           name: Store Service Account
-          command: echo $GCLOUD_SERVICE_KEY > key.txt
+          command: echo $GCLOUD_SERVICE_KEY && echo $GCLOUD_SERVICE_KEY > key.txt
       - run:
           name: Decode Service Account
           command: base64 -i key.txt -d > ${HOME}/gcloud-service-key.json
