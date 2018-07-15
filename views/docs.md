@@ -98,5 +98,3 @@ Returns the most recent price for every coin
 ## API Support
 
 For support or sales inquiries email: [alex@tokentax.us](mailto:alex@tokentax.us)
-
-testing
