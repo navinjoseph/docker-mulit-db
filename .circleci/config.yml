@@ -72,7 +72,7 @@ jobs:
       - image: google/cloud-sdk
         environment:
           GOOGLE_PROJECT_ID: tokentax-infra-209601
-          CLUSTER_NAME: tt-cluster
+          CLUSTER_NAME: tt-cluster-prod
           COMPUTE_ZONE: us-east1-c
           #As specified in Deployment.yml
           DEPLOYMENT_NAME: tt-pricing-dep
