@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -27,3 +28,24 @@ spec:
         backend:
           serviceName: tt-pricing-svc
           servicePort: 80
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: main-cert
+spec:
+  secretName: main-https
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: test3.tokentax.us
+  dnsNames:
+  - test3.tokentax.us
+  - beta3.tokentax.us
+  acme:
+    config:
+    - http01:
+        ingress: main-ingress
+      domains:
+      - test3.tokentax.us
+      - beta3.tokentax.us          
