@@ -7,11 +7,11 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "gce"
 spec:
-  # tls:
-  # - secretName: main-https
-  #   hosts:
-  #   - test3.tokentax.us
-  #   - beta3.tokentax.us
+  tls:
+  - secretName: tt-pricing-https
+    hosts:
+    - test3.tokentax.us
+    - beta3.tokentax.us
   rules:
   - host: test3.tokentax.us
     http:
