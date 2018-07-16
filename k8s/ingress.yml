@@ -6,7 +6,6 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: "gce"
-    kubernetes.io/ingress.global-static-ip-name: "main-ip"
 spec:
   # tls:
   # - secretName: main-https
@@ -34,7 +33,7 @@ kind: Certificate
 metadata:
   name: main-cert
 spec:
-  secretName: main-https
+  secretName: tt-pricing-https
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
