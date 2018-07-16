@@ -4,6 +4,6 @@ coverage/
 build/
 package-lock.json
 yarn-error.log
-.env
+.env*
 access.log
 newrelic_agent.log
