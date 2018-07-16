@@ -2,19 +2,28 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: main-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "main-ip"
 spec:
+  # tls:
+  # - secretName: main-https
+  #   hosts:
+  #   - test3.tokentax.us
+  #   - beta3.tokentax.us
   rules:
-  - host: test2.tokentax.us
+  - host: test3.tokentax.us
     http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: tt-pricing-svc
           servicePort: 80
-  - host: beta.tokentax.us
+  - host: beta3.tokentax.us
     http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: tt-pricing-svc
-          servicePort: 443
+          servicePort: 80
