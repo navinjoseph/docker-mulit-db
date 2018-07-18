@@ -10,11 +10,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tokentax-infra-209601 
+      app: tt-pricing-dep
   template:
     metadata:
       labels:
-        app: tokentax-infra-209601 
+        app: tt-pricing-dep 
     spec:
       #Container details
       containers:

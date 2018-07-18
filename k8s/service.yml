@@ -5,7 +5,7 @@ metadata:
   name: tt-pricing-svc
 spec:
   selector:
-    app: tokentax-infra-209601 
+    app: tt-pricing-dep
   ports:
     - port: 80
       targetPort: 3000
