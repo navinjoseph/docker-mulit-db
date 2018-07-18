@@ -16,14 +16,14 @@ spec:
   - host: test3.tokentax.us
     http:
       paths:
-      - path: /
+      - path: /*
         backend:
           serviceName: tt-pricing-svc
           servicePort: 80
   - host: beta3.tokentax.us
     http:
       paths:
-      - path: /
+      - path: /*
         backend:
           serviceName: tt-pricing-svc
           servicePort: 80
