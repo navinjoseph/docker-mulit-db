@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: scrape-live
 spec:
-  schedule: "*/20 * * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       template:
