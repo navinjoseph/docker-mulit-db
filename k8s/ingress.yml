@@ -2,28 +2,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: main-ingress
+  name: tt-pricing-ing
   namespace: default
   annotations:
     kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "tt-pricing-ip"
 spec:
   tls:
   - secretName: tt-pricing-https
     hosts:
-    - test3.tokentax.us
-    - beta3.tokentax.us
+    - pricing.tokentax.us
   rules:
-  - host: test3.tokentax.us
+  - host: pricing.tokentax.us
     http:
       paths:
-      - path: /
-        backend:
-          serviceName: tt-pricing-svc
-          servicePort: 80
-  - host: beta3.tokentax.us
-    http:
-      paths:
-      - path: /
+      - path: /*
         backend:
           serviceName: tt-pricing-svc
           servicePort: 80
@@ -37,14 +30,12 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: test3.tokentax.us
+  commonName: pricing.tokentax.us
   dnsNames:
-  - test3.tokentax.us
-  - beta3.tokentax.us
+  - pricing.tokentax.us
   acme:
     config:
     - http01:
-        ingress: main-ingress
+        ingress: tt-pricing-ing
       domains:
-      - test3.tokentax.us
-      - beta3.tokentax.us          
+      - pricing.tokentax.us  
