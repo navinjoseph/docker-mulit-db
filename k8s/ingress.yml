@@ -6,6 +6,7 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "tt-pricing-ip"
 spec:
   tls:
   - secretName: tt-pricing-https
