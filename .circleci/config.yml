@@ -101,10 +101,13 @@ jobs:
       - run:
           name: Deploy Master to GKE
           command: gcloud docker -- push gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}
-      - run: 
+      - run:
           name: Set deployment image
-          command: kubectl apply -f k8s/deployment.yml --record=true
-      
+          command: kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:latest
+      - run:
+          name: Set env variable with commit sha1
+          command: kubectl set env deployment/${DEPLOYMENT_NAME} COMMIT_SHA1=${CIRCLE_SHA1}
+          
 workflows:
   version: 2
   test_and_deploy:
