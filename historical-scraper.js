@@ -5,7 +5,6 @@ import { fetchSymbols, fetchCurrencyHistorical, getPriceHistorical } from './uti
 import { insertOrFetchCoin, insertPrice } from './utils/data'
 import winston from 'winston'
 import './db'
-import Raven from './raven/'
 
 async function requestData () {
   winston.info('Starting')
@@ -67,7 +66,6 @@ async function requestData () {
         message: err.message,
         currency: coinData.symbol
       })
-      Raven.captureException(err)
     }
   }
   winston.info('Finished')
