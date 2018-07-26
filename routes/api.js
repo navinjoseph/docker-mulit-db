@@ -2,10 +2,10 @@ import express from 'express'
 import Coin from '../db/models/coin'
 import knex from '../db/'
 import { raw } from 'objection'
-import Raven from '../raven/'
 import authenticate from '../middleware/auth'
 import { sanatizeCurrency } from '../utils/convert'
 import cache from '../middleware/cache'
+import winston from 'winston'
 
 const router = express.Router()
 
@@ -32,7 +32,7 @@ router.get('/current', authenticate, cache(180), async (req, res) => {
     const data = await knex.raw(query)
     res.json(data.rows)
   } catch (err) {
-    Raven.captureException(err)
+    winston.error(err)
     res.status(400).send({ error: err.message })
   }
 })
@@ -89,7 +89,7 @@ router.get('/range', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    Raven.captureException(err)
+    winston.error(err)
     res.status(400).send({ error: err.message })
   }
 })
@@ -154,7 +154,7 @@ router.get('/history', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    Raven.captureException(err)
+    winston.error(err)
     res.status(400).send({ error: err.message })
   }
 })
