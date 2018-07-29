@@ -87,6 +87,16 @@ describe('GET /api/v1/history', () => {
 })
 
 describe('GET /range', () => {
+  it('should exclude USD', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=usd,btc,ltc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+
+    expect(response.body).not.toHaveProperty('USD')
+    expect(response.body).toHaveProperty('BTC')
+    expect(response.body).toHaveProperty('LTC')
+  })
+
   it('should return a date range for one coin', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=ltc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'

@@ -51,6 +51,8 @@ router.get('/range', authenticate, async (req, res) => {
       .toUpperCase()
       .split(',')
       .map(item => sanatizeCurrency(item))
+      .filter(item => item !== 'USD')
+
     const coins = await Coin.query().whereIn('ticker', querySymbol)
 
     const start = new Date(+req.query.start)
