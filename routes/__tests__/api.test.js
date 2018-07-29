@@ -147,4 +147,9 @@ describe('GET /current', () => {
     expect(response.body).toHaveLength(4)
     expect(keys).toEqual(['timestamp', 'usd_price', 'coin_id', 'name', 'ticker'])
   })
+
+  it('should return json response', async () => {
+    const response = await request(app).get(`/api/v1/current?access_token=${token}`)
+    expect(response.type).toBe('application/json')
+  })
 })

@@ -9,7 +9,7 @@ import winston from 'winston'
 
 const router = express.Router()
 
-router.get('/current', authenticate, cache(180), async (req, res) => {
+router.get('/current', authenticate, cache(180, 'json'), async (req, res) => {
   try {
     const query = `
     SELECT
