@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build: 
+  build:
     working_directory: ~/pricing
     docker:
       - image: circleci/node:9.11
@@ -28,7 +28,7 @@ jobs:
       - run:
           name: yarn install
           command: yarn install
-      - run: 
+      - run:
           name: building docker image
           command: docker build --rm=false -t gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1 .
       - run:
@@ -45,7 +45,7 @@ jobs:
           key: node-modules-{{ checksum "package.json" }}
           paths:
             - node_modules
-      
+
   test:
     working_directory: ~/pricing
     docker:
@@ -64,8 +64,9 @@ jobs:
             - node-modules-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - node-modules-
+      - run: yarn install
       - run: yarn test
-      
+
   deploy:
     working_directory: ~/pricing
     docker:
@@ -95,7 +96,7 @@ jobs:
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run: gcloud --quiet config set compute/zone ${COMPUTE_ZONE}
       - run: gcloud --quiet container clusters get-credentials ${CLUSTER_NAME}
-      - run: 
+      - run:
           name: Tag docker image with latest
           command: docker tag gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:$CIRCLE_SHA1 gcr.io/${GOOGLE_PROJECT_ID}/${CONTAINER_NAME}:latest
       - run:
@@ -107,7 +108,7 @@ jobs:
       - run:
           name: Set env variable with commit sha1
           command: kubectl set env deployment/${DEPLOYMENT_NAME} COMMIT_SHA1=${CIRCLE_SHA1}
-          
+
 workflows:
   version: 2
   test_and_deploy:
