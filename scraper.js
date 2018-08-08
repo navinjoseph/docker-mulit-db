@@ -2,11 +2,11 @@ import request from 'superagent'
 import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import { insertOrFetchCoin, insertPrice } from './utils/data'
-import winston from 'winston'
+import logger from './utils/logger'
 import './db'
 
 async function requestData () {
-  winston.info('Starting')
+  logger.info('Starting')
 
   const symbols = await fetchSymbols(request)
 
@@ -38,19 +38,19 @@ async function requestData () {
         }
       })
 
-      winston.info('Inserted', {
+      logger.info('Inserted', {
         symbol: coin.ticker,
         sanatizedPrice: price.usdPrice
       })
     } catch (err) {
-      winston.error('Error', {
+      logger.error('Error', {
         message: err.message,
         currency: coinData.symbol
       })
     }
   }
 
-  winston.info('Finished')
+  logger.info('Finished')
   process.exit()
 }
 

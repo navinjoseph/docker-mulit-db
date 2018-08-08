@@ -4,10 +4,11 @@ import moment from 'moment'
 import { fetchSymbols, fetchCurrencyHistorical, getPriceHistorical } from './utils/fetch-currency'
 import { insertOrFetchCoin, insertPrice } from './utils/data'
 import winston from 'winston'
+import logger from './utils/logger'
 import './db'
 
 async function requestData () {
-  winston.info('Starting')
+  logger.info('Starting')
   const symbols = await fetchSymbols(request)
 
   for (const coinData of symbols.body.data) {
@@ -40,7 +41,7 @@ async function requestData () {
           }
         })
 
-        winston.info('Success', {
+        logger.info('Success', {
           ticker: coin.ticker,
           timestamp: insertedOpenPrice.timestamp,
           usdPrice: insertedOpenPrice.usdPrice
@@ -55,20 +56,20 @@ async function requestData () {
           }
         })
 
-        winston.info('Success', {
+        logger.info('Success', {
           ticker: coin.ticker,
           timestamp: insertedClosePrice.timestamp,
           usdPrice: insertedClosePrice.usdPrice
         })
       }
     } catch (err) {
-      winston.error('Error', {
+      logger.error('Error', {
         message: err.message,
         currency: coinData.symbol
       })
     }
   }
-  winston.info('Finished')
+  logger.info('Finished')
 }
 
 requestData()

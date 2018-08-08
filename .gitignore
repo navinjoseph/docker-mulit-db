@@ -7,3 +7,4 @@ yarn-error.log
 .env*
 access.log
 newrelic_agent.log
+logs-all.log
