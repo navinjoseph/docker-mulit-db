@@ -4,7 +4,7 @@ metadata:
   name: tt-pricing-dep
   labels:
     #Project ID
-    app: tokentax-infra-209601 
+    app: tokentax-infra-209601
 spec:
   #Run two instances of our application
   replicas: 1
@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        app: tt-pricing-dep 
+        app: tt-pricing-dep
     spec:
       #Container details
       containers:
@@ -31,16 +31,16 @@ spec:
               secretKeyRef:
                 name: pricing-db-url
                 key: PRICE_DATABASE_URL
-          - name: SENTRY_DSN_SERVER
+          - name: SENTRY_DSN
             valueFrom:
               configMapKeyRef:
                 name: tt-pricing-config
-                key: SENTRY_DSN_SERVER
-          - name: SENTRY_NAME
+                key: SENTRY_DSN
+          - name: NODE_ENV
             valueFrom:
               configMapKeyRef:
                 name: tt-pricing-config
-                key: SENTRY_NAME
+                key: NODE_ENV
           # resources:
           #   limits:
           #     memory: {nodeMemoryLimit} # for example, 1Gi
