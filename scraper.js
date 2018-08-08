@@ -28,7 +28,7 @@ async function requestData () {
         sanatizedPrice = null
       }
 
-      const price = await insertPrice({
+      await insertPrice({
         timestamp: new Date().toISOString(),
         usdPrice: sanatizedPrice,
         ticker: coin.ticker,
@@ -36,11 +36,6 @@ async function requestData () {
           name: 'crimson-realtime',
           description: 'Crimson historical data'
         }
-      })
-
-      logger.info('Inserted', {
-        symbol: coin.ticker,
-        sanatizedPrice: price.usdPrice
       })
     } catch (err) {
       logger.error('Error', {
