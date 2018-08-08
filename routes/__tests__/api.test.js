@@ -1,6 +1,5 @@
 import request from 'supertest'
 import app from '../../app'
-import winston from 'winston'
 import knex from '../../db'
 
 beforeEach(async () => {
@@ -9,7 +8,7 @@ beforeEach(async () => {
     await knex.migrate.latest()
     await knex.seed.run()
   } catch (err) {
-    winston.error(err)
+    console.error(err)
   }
 })
 

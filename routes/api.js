@@ -5,7 +5,7 @@ import { raw } from 'objection'
 import authenticate from '../middleware/auth'
 import { sanatizeCurrency } from '../utils/convert'
 import cache from '../middleware/cache'
-import winston from 'winston'
+import logger from '../utils/logger'
 
 const router = express.Router()
 
@@ -25,14 +25,14 @@ router.get('/current', authenticate, cache(180, 'json'), async (req, res) => {
           pi.coin_id = c.id
         ORDER BY
             pi. "timestamp" DESC
-        LIMIT 1) 
+        LIMIT 1)
       AS p
     `
 
     const data = await knex.raw(query)
     res.json(data.rows)
   } catch (err) {
-    winston.error(err)
+    logger.error(err)
     res.status(400).send({ error: err.message })
   }
 })
@@ -91,7 +91,7 @@ router.get('/range', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    winston.error(err)
+    logger.error(err)
     res.status(400).send({ error: err.message })
   }
 })
@@ -156,7 +156,7 @@ router.get('/history', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    winston.error(err)
+    logger.error(err)
     res.status(400).send({ error: err.message })
   }
 })

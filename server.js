@@ -2,7 +2,7 @@
 import 'newrelic'
 import {} from 'dotenv/config'
 import app from './app'
-import winston from 'winston'
+import logger from './utils/logger'
 import throng from 'throng'
 
 const port = process.env.PORT || 3000
@@ -11,7 +11,7 @@ const { NODE_ENV } = process.env
 
 function startApp () {
   app.listen(port, () => {
-    winston.info('Magic happens on port ' + port)
+    logger.info('Magic happens on port ' + port)
   })
 }
 
