@@ -38,10 +38,7 @@ async function requestData () {
         }
       })
     } catch (err) {
-      logger.error('Error', {
-        message: err.message,
-        currency: coinData.symbol
-      })
+      logger.error(err, { extra: { currency: coinData.symbol } })
     }
   }
 
