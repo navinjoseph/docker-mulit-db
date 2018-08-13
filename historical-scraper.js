@@ -3,7 +3,6 @@ import cheerio from 'cheerio'
 import moment from 'moment'
 import { fetchSymbols, fetchCurrencyHistorical, getPriceHistorical } from './utils/fetch-currency'
 import { insertOrFetchCoin, insertPrice } from './utils/data'
-import winston from 'winston'
 import logger from './utils/logger'
 import './db'
 
@@ -63,10 +62,7 @@ async function requestData () {
         })
       }
     } catch (err) {
-      logger.error('Error', {
-        message: err.message,
-        currency: coinData.symbol
-      })
+      logger.error(err, { extra: { currency: coinData.symbol } })
     }
   }
   logger.info('Finished')
