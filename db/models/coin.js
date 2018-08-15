@@ -24,7 +24,7 @@ export default class Coin extends Model {
           type: 'string',
           minLength: 1,
           maxLength: 255,
-          unique: true,
+          unique: false,
           nullable: false
         },
         ticker: {
