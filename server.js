@@ -19,7 +19,7 @@ if (NODE_ENV !== 'production') {
 } else {
   throng(
     {
-      workers: 5,
+      workers: 1,
       lifetime: Infinity
     },
     startApp
