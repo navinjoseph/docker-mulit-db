@@ -6,7 +6,6 @@ import logger from './utils/logger'
 import throng from 'throng'
 
 const port = process.env.PORT || 3000
-const WORKERS = process.env.WEB_CONCURRENCY || 1
 const { NODE_ENV } = process.env
 
 function startApp () {
@@ -20,7 +19,7 @@ if (NODE_ENV !== 'production') {
 } else {
   throng(
     {
-      workers: WORKERS,
+      workers: 5,
       lifetime: Infinity
     },
     startApp
