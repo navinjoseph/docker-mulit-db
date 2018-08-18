@@ -19,5 +19,4 @@ ENV PORT 3000
 
 EXPOSE 3000
 
-RUN yarn run build
-CMD yarn run db:migrate && yarn run prod
+CMD yarn run build && yarn run db:migrate && yarn run prod
