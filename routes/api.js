@@ -61,6 +61,7 @@ router.get('/range', authenticate, async (req, res) => {
       .eager('prices')
       .modifyEager('prices', builder => {
         builder.whereBetween('timestamp', [start, end])
+        builder.orderBy('timestamp')
       })
 
     const response = coins.reduce((acc, val) => {
