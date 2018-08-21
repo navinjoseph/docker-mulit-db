@@ -53,40 +53,18 @@ router.get('/range', authenticate, async (req, res) => {
       .map(item => sanatizeCurrency(item))
       .filter(item => item !== 'USD')
 
-    const coins = await Coin.query().whereIn('ticker', querySymbol)
-
     const start = new Date(+req.query.start)
     const end = new Date(+req.query.end)
 
-    const pricePromises = coins.map(async coin => {
-      return coin
-        .$relatedQuery('prices')
-        .whereBetween('timestamp', [start, end])
-        .orderBy('timestamp')
-    })
+    const coins = await Coin.query()
+      .whereIn('ticker', querySymbol)
+      .eager('prices')
+      .modifyEager('prices', builder => {
+        builder.whereBetween('timestamp', [start, end])
+      })
 
-    const priceData = await Promise.all(pricePromises)
-
-    const fallbackPricePromises = priceData.filter(arr => arr.length === 0).map(async (item, index) => {
-      return coins[index]
-        .$relatedQuery('prices')
-        .orderBy(raw(`abs(extract(epoch FROM (price."timestamp" - timestamp '${start.toISOString()}')))`))
-        .limit(1)
-    })
-
-    const fallbackData = await Promise.all(fallbackPricePromises)
-
-    const response = querySymbol.reduce((acc, val, index) => {
-      if (!priceData[index] || !priceData[index].length || priceData[index].length === 0) {
-        return {
-          ...acc,
-          [val]: fallbackData[index]
-        }
-      }
-      return {
-        ...acc,
-        [val]: priceData[index]
-      }
+    const response = coins.reduce((acc, val) => {
+      return { [val.ticker]: val.prices, ...acc }
     }, {})
 
     res.json(response)

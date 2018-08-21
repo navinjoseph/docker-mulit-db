@@ -34,9 +34,19 @@ exports.seed = function (knex, Promise) {
           coinId: 2
         },
         {
+          timestamp: new Date('2017-04-28T09:30:00').toISOString(),
+          usdPrice: 300,
+          coinId: 3
+        },
+        {
           timestamp: new Date('2013-04-28T09:30:00').toISOString(),
           usdPrice: 300,
           coinId: 3
+        },
+        {
+          timestamp: new Date('2017-04-28T09:30:00').toISOString(),
+          usdPrice: 1.2,
+          coinId: 4
         },
         {
           timestamp: new Date('2013-04-28T09:30:00').toISOString(),

@@ -86,6 +86,18 @@ describe('GET /api/v1/history', () => {
 })
 
 describe('GET /range', () => {
+  it('should have the right coin id paired with the currecy key', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=zrx,usd,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+
+    expect(response.body).toHaveProperty('BTC')
+    expect(response.body).toHaveProperty('ZRX')
+    expect(response.body.ZRX[0].coinId).toBe(4)
+    expect(response.body).not.toHaveProperty('USD')
+    expect(response.body).not.toHaveProperty('LTC')
+  })
+
   it('should exclude USD', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=usd,btc,ltc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
@@ -128,23 +140,6 @@ describe('GET /range', () => {
   it('should return 400 when no coin', async () => {
     const response = await request(app).get('/api/v1/range?access_token=7c96053e681f16e90aaefd33566ed1fc')
     expect(response.status).toBe(400)
-  })
-
-  it('should return single item when end is before start', async () => {
-    const response = await request(app).get(
-      '/api/v1/range?symbol=ltc,btc&end=1483228800000&start=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
-    )
-
-    expect(response.body.LTC).toHaveLength(1)
-    expect(response.body.BTC).toHaveLength(1)
-  })
-
-  it('should return closest date if not found in range', async () => {
-    const response = await request(app).get(
-      '/api/v1/range?symbol=ltc,btc&start=1498321400000&end=1498352336000&access_token=7c96053e681f16e90aaefd33566ed1fc'
-    )
-
-    expect(response.body.BTC.length).toBeGreaterThan(0)
   })
 })
 
