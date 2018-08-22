@@ -61,7 +61,7 @@
     "test:watch": "NODE_ENV=test jest --watchAll --runInBand --forceExit",
     "precommit": "lint-staged",
     "build": "backpack build",
-    "prod": "node build/server.js",
+    "prod": "node --optimize_for_size --max_old_space_size=4750 build/server.js",
     "db:migrate": "knex migrate:latest --knexfile ./db/knexfile.js",
     "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
   },
