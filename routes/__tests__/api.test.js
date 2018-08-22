@@ -91,6 +91,8 @@ describe('GET /range', () => {
       '/api/v1/range?symbol=zrx,usd,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
     )
 
+    console.log(response.body)
+
     expect(response.body).toHaveProperty('BTC')
     expect(response.body).toHaveProperty('ZRX')
     expect(response.body.ZRX[0].coinId).toBe(4)
