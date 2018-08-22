@@ -86,6 +86,17 @@ describe('GET /api/v1/history', () => {
 })
 
 describe('GET /range', () => {
+  it('should have dates in asc order', async () => {
+    const response = await request(app).get(
+      '/api/v1/range?symbol=zrx,usd,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
+    )
+
+    const firstDate = new Date(response.body.BTC[0].timestamp).getTime()
+    const secondDate = new Date(response.body.BTC[1].timestamp).getTime()
+
+    expect(firstDate).toBeLessThan(secondDate)
+  })
+
   it('should have the right coin id paired with the currecy key', async () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=zrx,usd,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
@@ -127,7 +138,7 @@ describe('GET /range', () => {
     const response = await request(app).get(
       '/api/v1/range?symbol=ltc,btc&start=1483228800000&end=1514764800000&access_token=7c96053e681f16e90aaefd33566ed1fc'
     )
-    expect(response.body.BTC).toHaveLength(2)
+    expect(response.body.BTC).toHaveLength(3)
   })
 
   it('should return 400 when no no start and end', async () => {
