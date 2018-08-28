@@ -5,6 +5,11 @@ import { insertOrFetchCoin, insertPrice } from './utils/data'
 import logger from './utils/logger'
 import './db'
 
+// Imports the Google Cloud client library
+const monitoring = require('@google-cloud/monitoring');
+const client = new monitoring.MetricServiceClient();
+const projectId = process.env.GOOGLE_PROJECT;
+
 async function requestData () {
   logger.info('Starting')
 
@@ -43,6 +48,44 @@ async function requestData () {
   }
 
   logger.info('Finished')
+
+  var dataPoint = {
+    interval: {
+      endTime: {
+        seconds: Date.now() / 1000,
+      },
+    },
+    value: {
+      boolValue: true,
+    },
+  };
+  
+  var timeSeriesData = {
+    metric: {
+      type: 'custom.googleapis.com/pricing/scrape_job_succeeded',
+      labels: {},
+    },
+    resource: {
+      type: 'global',
+      labels: {},
+    },
+    points: [dataPoint],
+  };
+  
+  var monitoringRequest = {
+    name: client.projectPath(projectId),
+    timeSeries: [timeSeriesData],
+  };
+  
+  client
+    .createTimeSeries(monitoringRequest)
+    .then(results => {
+      console.log(`Done writing job success monitoring`, results[0]);
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });  
+
   process.exit()
 }
 

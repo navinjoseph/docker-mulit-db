@@ -24,4 +24,20 @@ spec:
                     configMapKeyRef:
                       name: tt-pricing-config
                       key: SENTRY_DSN
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: /mnt/auth.json
+                - name: GOOGLE_PROJECT
+                  valueFrom:
+                    secretKeyRef:
+                      name: gcloud-monitoring-secret
+                      key: google-project
+              volumeMounts:
+              - name: gcloud-monitoring-secret
+                mountPath: /mnt/auth.json
+                subPath: auth.json
+          volumes:
+          - name: gcloud-monitoring-secret
+            secret:
+              secretName: gcloud-monitoring-secret
           restartPolicy: Never
+
