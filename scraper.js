@@ -3,12 +3,11 @@ import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import { insertOrFetchCoin, insertPrice } from './utils/data'
 import logger from './utils/logger'
+import monitoring from '@google-cloud/monitoring'
 import './db'
 
-// Imports the Google Cloud client library
-const monitoring = require('@google-cloud/monitoring');
-const client = new monitoring.MetricServiceClient();
-const projectId = process.env.GOOGLE_PROJECT;
+const client = new monitoring.MetricServiceClient()
+const { GOOGLE_PROJECT } = process.env
 
 async function requestData () {
   logger.info('Starting')
@@ -49,42 +48,46 @@ async function requestData () {
 
   logger.info('Finished')
 
-  var dataPoint = {
+  const dataPoint = {
     interval: {
       endTime: {
-        seconds: Date.now() / 1000,
-      },
+        seconds: Date.now() / 1000
+      }
     },
     value: {
-      boolValue: true,
-    },
-  };
-  
-  var timeSeriesData = {
+      boolValue: true
+    }
+  }
+
+  const timeSeriesData = {
     metric: {
       type: 'custom.googleapis.com/pricing/scrape_job_succeeded',
-      labels: {},
+      labels: {}
     },
     resource: {
       type: 'global',
-      labels: {},
+      labels: {}
     },
-    points: [dataPoint],
-  };
-  
-  var monitoringRequest = {
-    name: client.projectPath(projectId),
-    timeSeries: [timeSeriesData],
-  };
-  
+    points: [dataPoint]
+  }
+
+  const monitoringRequest = {
+    name: client.projectPath(GOOGLE_PROJECT),
+    timeSeries: [timeSeriesData]
+  }
+
   client
     .createTimeSeries(monitoringRequest)
     .then(results => {
-      console.log(`Done writing job success monitoring`, results[0]);
+      logger.info(`Done writing job success monitoring`, {
+        extra: {
+          results: results[0]
+        }
+      })
     })
     .catch(err => {
-      console.error('ERROR:', err);
-    });  
+      logger.error(err)
+    })
 
   process.exit()
 }
