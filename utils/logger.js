@@ -1,10 +1,9 @@
 import winston from 'winston'
-import Sentry from 'winston-raven-sentry'
+// import Sentry from 'winston-raven-sentry'
 
-const sentryOptions = {
-  dsn: process.env.SENTRY_DSN,
-  level: 'error'
-}
+// const sentryOptions = {
+//   dsn: process.env.SENTRY_DSN
+// }
 const consoleTransport = new winston.transports.Console({
   name: 'console-transport'
 })
@@ -23,9 +22,9 @@ logger.stream = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  logger.remove('console-transport')
-  logger.remove('file-transport')
-  logger.add(Sentry, sentryOptions)
+  // logger.remove('console-transport')
+  // logger.remove('file-transport')
+  // logger.add(Sentry, sentryOptions)
 }
 
 export default logger
