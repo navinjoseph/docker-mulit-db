@@ -3,7 +3,11 @@ import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import { insertOrFetchCoin, insertPrice } from './utils/data'
 import logger from './utils/logger'
+import monitoring from '@google-cloud/monitoring'
 import './db'
+
+const client = new monitoring.MetricServiceClient()
+const { GOOGLE_PROJECT } = process.env
 
 async function requestData () {
   logger.info('Starting')
@@ -43,6 +47,48 @@ async function requestData () {
   }
 
   logger.info('Finished')
+
+  const dataPoint = {
+    interval: {
+      endTime: {
+        seconds: Date.now() / 1000
+      }
+    },
+    value: {
+      boolValue: true
+    }
+  }
+
+  const timeSeriesData = {
+    metric: {
+      type: 'custom.googleapis.com/pricing/scrape_job_succeeded',
+      labels: {}
+    },
+    resource: {
+      type: 'global',
+      labels: {}
+    },
+    points: [dataPoint]
+  }
+
+  const monitoringRequest = {
+    name: client.projectPath(GOOGLE_PROJECT),
+    timeSeries: [timeSeriesData]
+  }
+
+  client
+    .createTimeSeries(monitoringRequest)
+    .then(results => {
+      logger.info(`Done writing job success monitoring`, {
+        extra: {
+          results: results[0]
+        }
+      })
+    })
+    .catch(err => {
+      logger.error(err)
+    })
+
   process.exit()
 }
 
