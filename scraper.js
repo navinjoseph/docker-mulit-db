@@ -41,6 +41,13 @@ async function requestData () {
           description: 'Crimson historical data'
         }
       })
+
+      logger.info('inserted', {
+        extra: {
+          usdPrice: sanatizedPrice,
+          ticker: coin.ticker
+        }
+      })
     } catch (err) {
       logger.error(err, { extra: { currency: coinData.symbol } })
     }
