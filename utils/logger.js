@@ -2,7 +2,8 @@ import winston from 'winston'
 import Sentry from 'winston-raven-sentry'
 
 const sentryOptions = {
-  dsn: process.env.SENTRY_DSN
+  dsn: process.env.SENTRY_DSN,
+  level: 'error'
 }
 const consoleTransport = new winston.transports.Console({
   name: 'console-transport'
