@@ -22,7 +22,7 @@ logger.stream = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  // logger.remove('console-transport')
+  logger.remove('console-transport')
   // logger.remove('file-transport')
   // logger.add(Sentry, sentryOptions)
 }
