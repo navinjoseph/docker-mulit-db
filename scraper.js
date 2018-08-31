@@ -49,14 +49,11 @@ async function requestData () {
     }
   }
 
-  request
-    .get('https://cronhub.io/ping/be556310-ac1c-11e8-9ab0-e74124470935')
-    .then(res => {
-      logger.info(res)
-    })
-    .catch(err => {
-      logger.warn(err)
-    })
+  try {
+    await request.get('https://cronhub.io/ping/be556310-ac1c-11e8-9ab0-e74124470935')
+  } catch (err) {
+    logger.warn(err)
+  }
 
   logger.info('Finished')
 
