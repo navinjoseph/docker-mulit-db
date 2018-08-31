@@ -32,7 +32,13 @@ router.get('/current', authenticate, cache(180, 'json'), async (req, res) => {
     const data = await knex.raw(query)
     res.json(data.rows)
   } catch (err) {
-    logger.error(err)
+    logger.error(err, {
+      extra: {
+        info: 'Error in /current',
+        message: err.message,
+        stack: err.stack
+      }
+    })
     res.status(400).send({ error: err.message })
   }
 })
@@ -70,7 +76,13 @@ router.get('/range', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    logger.error(err)
+    logger.error(err, {
+      extra: {
+        info: 'Error in /range',
+        message: err.message,
+        stack: err.stack
+      }
+    })
     res.status(400).send({ error: err.message })
   }
 })
@@ -135,7 +147,13 @@ router.get('/history', authenticate, async (req, res) => {
 
     res.json(response)
   } catch (err) {
-    logger.error(err)
+    logger.error(err, {
+      extra: {
+        info: 'Error in /history',
+        message: err.message,
+        stack: err.stack
+      }
+    })
     res.status(400).send({ error: err.message })
   }
 })
