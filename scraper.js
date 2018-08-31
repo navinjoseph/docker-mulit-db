@@ -1,5 +1,4 @@
 import request from 'superagent'
-import https from 'https'
 import cheerio from 'cheerio'
 import fetchCurrency, { getPrice, fetchSymbols } from './utils/fetch-currency'
 import { insertOrFetchCoin, insertPrice } from './utils/data'
@@ -50,7 +49,15 @@ async function requestData () {
     }
   }
 
-  https.get('https://cronhub.io/ping/be556310-ac1c-11e8-9ab0-e74124470935')
+  request
+    .get('https://cronhub.io/ping/be556310-ac1c-11e8-9ab0-e74124470935')
+    .then(res => {
+      logger.info(res)
+    })
+    .catch(err => {
+      logger.warn(err)
+    })
+
   logger.info('Finished')
 
   process.exit()
