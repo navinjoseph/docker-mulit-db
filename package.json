@@ -1,0 +1,18 @@
+{
+  "name": "vsdebug-docker",
+  "version": "0.0.1",
+  "description": "Testing remote docker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Navin",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "github.com"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

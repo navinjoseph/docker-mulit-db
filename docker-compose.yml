@@ -1,0 +1,29 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: nodemon --inspect=0.0.0.0:5858
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+      - "5858:5858"
+    depends_on:
+      - postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+  postgres:
+    build: ./docker-postgresql-multiple-databases
+    image: postgres:9.6.2-alpine
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES="test-db","dev-db"
+      - POSTGRES_USER=myapp
+      - POSTGRES_PASSWORD=password
