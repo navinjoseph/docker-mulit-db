@@ -1,0 +1,21 @@
+html
+  head
+    title= title
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css', type='text/css' )
+    style(type="text/css").
+      .markdown-body {
+        max-width: 800px;
+        margin: 50px auto;
+        line-height: 1.5;
+        padding: 0 20px;
+      }
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-111243721-2')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-111243721-2');
+
+  body.markdown-body
+    include:markdown-it docs.md
+      

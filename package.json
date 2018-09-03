@@ -1,18 +1,75 @@
 {
-  "name": "vsdebug-docker",
-  "version": "0.0.1",
-  "description": "Testing remote docker",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Navin",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "github.com"
-  },
+  "name": "history",
+  "version": "1.0.0",
+  "description": "TokenTax historyic pricing feeds",
+  "main": "server.js",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3"
+    "backpack-core": "^0.7.0",
+    "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
+    "codecov": "^3.0.2",
+    "cors": "^2.8.4",
+    "cryptocurrencies": "^3.0.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "jstransformer-markdown-it": "^2.1.0",
+    "knex": "^0.14.6",
+    "memory-cache": "^0.2.0",
+    "moment": "^2.22.1",
+    "morgan": "^1.9.0",
+    "newrelic": "^4.1.3",
+    "objection": "^1.1.8",
+    "permit": "^0.2.2",
+    "pg": "^7.4.3",
+    "pug": "^2.0.3",
+    "raven": "^2.6.2",
+    "superagent": "^3.8.2",
+    "throng": "^4.0.0",
+    "winston": "^2.4.3",
+    "winston-raven-sentry": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "8",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-watch": "^2.0.7",
+    "eslint": "4.x",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "husky": "^0.14.3",
+    "jest": "^22.4.3",
+    "lint-staged": "^7.0.5",
+    "prettier": "1.12.1",
+    "supertest": "^3.0.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development babel-watch server.js",
+    "scrape": "NODE_ENV=development babel-node scraper.js",
+    "scrape:history": "NODE_ENV=development babel-node historical-scraper.js",
+    "test": "jest --runInBand --forceExit && yarn run test:codecov",
+    "test:codecov": "codecov --token=c08cd1fc-b004-4d0e-9d77-d4a1b0b18d84",
+    "test:coverage": "jest --runInBand --forceExit --coverage --watchAll",
+    "test:watch": "NODE_ENV=test jest --watchAll --runInBand --forceExit",
+    "precommit": "lint-staged",
+    "build": "backpack build",
+    "prod": "node --optimize_for_size --max_old_space_size=4750 build/server.js",
+    "db:migrate": "knex migrate:latest --knexfile ./db/knexfile.js",
+    "db:migrate:rollback": "knex migrate:rollback --knexfile ./db/knexfile.js"
+  },
+  "lint-staged": {
+    "*.js": ["prettier --write", "eslint --fix", "git add"]
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }

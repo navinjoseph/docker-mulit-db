@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tt-pricing-config
+data:
+  NODE_ENV: "production"
+  SENTRY_DSN: "https://98cd4d8ab78f42b4941608b18af8807c@sentry.io/1258651"

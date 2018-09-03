@@ -1,0 +1,10 @@
+node_modules/
+coverage/
+.DS_Store
+build/
+package-lock.json
+yarn-error.log
+.env*
+access.log
+newrelic_agent.log
+logs-all.log
